@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+      body {
+        background: linear-gradient(135deg, #ffe4ec 0%, #d1c4e9 100%);
+      }
+      .fitness-header {
+        background: linear-gradient(90deg, #e75480 0%, #8e24aa 100%);
+        color: #fff;
+        padding: 38px 0 18px 0;
+        text-align: center;
+        border-radius: 0 0 40px 40px;
+        box-shadow: 0 4px 24px rgba(231, 84, 128, 0.10);
+        margin-bottom: 30px;
+      }
+      .fitness-header h1 {
+        margin: 0;
+        font-size: 2.6rem;
+        letter-spacing: 2px;
+      }
+      .fitness-header p {
+        margin: 10px 0 0 0;
+        font-size: 1.2rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+      }
+      .fitness-videos {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 32px;
+        margin: 0 auto 40px auto;
+        max-width: 1100px;
+      }
+      .fitness-card {
+        background: #f3e5f5;
+        border-radius: 22px;
+        box-shadow: 0 4px 16px rgba(142, 36, 170, 0.10);
+        padding: 24px 18px 18px 18px;
+        width: 340px;
+        text-align: center;
+        transition: transform 0.2s, box-shadow 0.2s;
+        position: relative;
+      }
+      .fitness-card:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 8px 32px rgba(142, 36, 170, 0.18);
+      }
+      .fitness-card .icon {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        display: block;
+      }
+      .fitness-card h2 {
+        color: #e75480;
+        font-size: 1.1rem;
+        margin: 0 0 8px 0;
+      }
+      .fitness-card p {
+        color: #8e24aa;
+        font-size: 0.98rem;
+        margin: 0 0 12px 0;
+      }
+      .fitness-card iframe {
+        border: 3px solid #e75480;
+        border-radius: 14px;
+        box-shadow: 0 2px 8px rgba(231, 84, 128, 0.12);
+        background: #fff;
+      }
+      a[href="health.html"] {
+        display: inline-block;
+        margin: 20px 0 0 30px;
+        color: #e75480;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 1.1rem;
+        transition: color 0.2s;
+      }
+      a[href="health.html"]:hover {
+        color: #8e24aa;
+        text-decoration: underline;
+      }
+      footer {
+        background: #e75480;
+        color: #fff;
+        text-align: center;
+        padding: 16px 0;
+        border-radius: 30px 30px 0 0;
+        margin-top: 40px;
+        font-size: 1rem;
+        letter-spacing: 1px;
+      }
+    </style>
+</head>
+<body>
+    <div class="fitness-header">
+      <h1>Fitness</h1>
+      <p>Discover tips and routines to keep your body active and strong!</p>
+    </div>
+    <a href="health.html">&larr; Back to Health Topics</a>
+    <div class="fitness-videos">
+      <div class="fitness-card">
+        <span class="icon">🏃‍♀️</span>
+        <h2>Full Body Workout</h2>
+        <p>Get moving with a simple, effective full body routine.</p>
+        <iframe width="300" height="170" src="https://www.youtube.com/embed/UBMk30rjy0o" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="fitness-card">
+        <span class="icon">🤸‍♂️</span>
+        <h2>Beginner Fitness</h2>
+        <p>Start your fitness journey with easy-to-follow exercises.</p>
+        <iframe width="300" height="170" src="https://www.youtube.com/embed/1skBf6h2ksI" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="fitness-card">
+        <span class="icon">🧘‍♀️</span>
+        <h2>Stretch & Flexibility</h2>
+        <p>Improve flexibility and reduce stress with stretching routines.</p>
+        <iframe width="300" height="170" src="https://www.youtube.com/embed/2pLT-olgUJs" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="fitness-card">
+        <span class="icon">💪</span>
+        <h2>Home Workouts</h2>
+        <p>Stay fit at home with no equipment needed!</p>
+        <iframe width="300" height="170" src="https://www.youtube.com/embed/ml6cT4AZdqI" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="fitness-card">
+        <span class="icon">🦵</span>
+        <h2>Leg & Core Strength</h2>
+        <p>Build strength in your legs and core with these moves.</p>
+        <iframe width="300" height="170" src="https://www.youtube.com/embed/50kH47ZztHs" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+    <footer>
+      &copy; 2024 HerWell. All rights reserved.
+    </footer>
+</body>
+</html> 
