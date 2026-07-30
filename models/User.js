@@ -40,6 +40,7 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: {
       validator: function(v) {
+        if (!v || v === '') return true;
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
       },
       message: 'Please enter a valid email address'
@@ -58,6 +59,10 @@ const userSchema = new mongoose.Schema({
   isActive: {
     type: Boolean,
     default: true
+  },
+  fcmToken: {
+    type: String,
+    default: null
   },
   lastLogin: {
     type: Date,

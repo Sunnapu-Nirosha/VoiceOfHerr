@@ -1,116 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GirlForward: Economic Development & Empowerment</title>
-    <style>
-      body {
-        font-family: "Arial", sans-serif;
-        margin: 0;
-        padding: 0;
-        background: linear-gradient(135deg, #ffe4e1 0%, #ffc1cc 100%);
-        color: #333;
-      }
-      .econ-header {
-        background: linear-gradient(90deg, #ff69b4 0%, #ffb6c1 100%);
-        color: #fff;
-        padding: 40px 0 20px 0;
-        text-align: center;
-        border-radius: 0 0 40px 40px;
-        box-shadow: 0 4px 24px rgba(231, 84, 128, 0.10);
-        margin-bottom: 30px;
-      }
-      .econ-header h1 {
-        margin: 0;
-        font-size: 2.6rem;
-        letter-spacing: 2px;
-      }
-      .econ-header p {
-        margin: 10px 0 0 0;
-        font-size: 1.2rem;
-        font-weight: 500;
-        letter-spacing: 1px;
-      }
-      .econ-topics-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 32px;
-        margin: 0 auto 40px auto;
-        max-width: 1100px;
-      }
-      .econ-card {
-        background: #fff0f6;
-        border-radius: 24px;
-        box-shadow: 0 4px 16px rgba(231, 84, 128, 0.10);
-        padding: 32px 28px 24px 28px;
-        width: 260px;
-        text-align: center;
-        transition: transform 0.2s, box-shadow 0.2s;
-        position: relative;
-        text-decoration: none;
-      }
-      .econ-card:hover {
-        transform: translateY(-10px) scale(1.04);
-        box-shadow: 0 8px 32px rgba(231, 84, 128, 0.18);
-      }
-      .econ-card .icon {
-        font-size: 3.2rem;
-        margin-bottom: 12px;
-        display: block;
-      }
-      .econ-card h2 {
-        color: #ff69b4;
-        font-size: 1.3rem;
-        margin: 0 0 10px 0;
-      }
-      .econ-card p {
-        color: #b54581;
-        font-size: 1rem;
-        margin: 0 0 18px 0;
-      }
-      footer {
-        background: #ff1493;
-        color: #fff;
-        text-align: center;
-        padding: 18px 0;
-        border-radius: 30px 30px 0 0;
-        margin-top: 40px;
-        font-size: 1rem;
-        letter-spacing: 1px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="econ-header">
-      <h1>Economic Development & Empowerment</h1>
-      <p>Explore resources and videos to build your economic future!</p>
-    </div>
-    <div class="econ-topics-list">
-      <a class="econ-card" href="entrepreneurship.html">
-        <span class="icon">💡</span>
-        <h2>Entrepreneurship</h2>
-        <p>Start your own business and learn from inspiring entrepreneurs.</p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Economic Development | Voice of Her</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script type="module" src="fire.js"></script>
+</head>
+<body>
+
+<header id="main-header">
+  <div class="header-inner">
+    <a href="dashboard.html" class="logo">
+      <img src="images/logo.svg" alt="Voice of Her" />
+      <span>Voice of Her</span>
+    </a>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="sos.html" class="nav-cta" style="background:#EF5350;">SOS</a>
+      <a href="#" id="logout-btn" class="nav-cta" style="background:var(--gray);">Logout</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <h1>Economic Development</h1>
+  <p>Build your financial future with expert guidance</p>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="cards-grid">
+      <a href="entrepreneurship.html" class="topic-card">
+        <div class="topic-card-img"><img src="images/entrepreneurship.jpg" alt="Entrepreneurship" /></div>
+        <div class="topic-card-body">
+          <h3>Entrepreneurship</h3>
+          <p>Start your own business and learn from inspiring women entrepreneurs.</p>
+          <span class="service-link">Explore <i class="fas fa-arrow-right"></i></span>
+        </div>
       </a>
-      <a class="econ-card" href="vocational_training.html">
-        <span class="icon">💻</span>
-        <h2>Vocational Training</h2>
-        <p>Gain practical skills for a successful career.</p>
+      <a href="vocational_training.html" class="topic-card">
+        <div class="topic-card-img"><img src="images/vocational-training.jpg" alt="Vocational Training" /></div>
+        <div class="topic-card-body">
+          <h3>Vocational Training</h3>
+          <p>Gain practical, hands-on skills for a successful career.</p>
+          <span class="service-link">Explore <i class="fas fa-arrow-right"></i></span>
+        </div>
       </a>
-      <a class="econ-card" href="financial_literacy.html">
-        <span class="icon">💰</span>
-        <h2>Financial Literacy</h2>
-        <p>Master money management, saving, and investing.</p>
+      <a href="financial_literacy.html" class="topic-card">
+        <div class="topic-card-img"><img src="images/financial-literacy.jpg" alt="Financial Literacy" /></div>
+        <div class="topic-card-body">
+          <h3>Financial Literacy</h3>
+          <p>Master money management, saving, and smart investing.</p>
+          <span class="service-link">Explore <i class="fas fa-arrow-right"></i></span>
+        </div>
       </a>
-      <a class="econ-card" href="additional_resources.html">
-        <span class="icon">📚</span>
-        <h2>Additional Resources</h2>
-        <p>Find more tools and support for your economic journey.</p>
+      <a href="additional_resources.html" class="topic-card">
+        <div class="topic-card-img"><img src="images/resources.jpg" alt="Resources" /></div>
+        <div class="topic-card-body">
+          <h3>Additional Resources</h3>
+          <p>More tools and support for your economic growth journey.</p>
+          <span class="service-link">Explore <i class="fas fa-arrow-right"></i></span>
+        </div>
       </a>
     </div>
-    <footer>
-      &copy; 2024 GirlForward. All rights reserved.
-    </footer>
-  </body>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-brand-logo">
+        <img src="images/logo.svg" alt="Voice of Her" />
+        <span>Voice of Her</span>
+      </div>
+      <p>Empowering women through safety, education, health, and economic development.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="sos.html">Emergency SOS</a></li>
+        <li><a href="health.html">Health</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="economics.html">Economy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Voice of Her. All rights reserved.</p>
+  </div>
+</footer>
+
+<script type="module">
+  import { isLoggedIn, logout } from './fire.js';
+  if (!isLoggedIn()) window.location.href = 'index.html';
+  document.getElementById('logout-btn').addEventListener('click', function(e) { e.preventDefault(); logout(); });
+  window.addEventListener('scroll', function() {
+    document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50);
+  });
+</script>
+
+</body>
 </html>

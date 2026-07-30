@@ -11,12 +11,19 @@
       .topic-header h1 { margin: 0; font-size: 2.6rem; letter-spacing: 2px; }
       .topic-header p { margin: 10px 0 0 0; font-size: 1.2rem; font-weight: 500; letter-spacing: 1px; }
       .video-cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 32px; margin: 0 auto 40px auto; max-width: 1100px; }
-      .video-card { background: #fff0f6; border-radius: 22px; box-shadow: 0 4px 16px rgba(231, 84, 128, 0.10); padding: 24px 18px 18px 18px; width: 340px; text-align: center; transition: transform 0.2s, box-shadow 0.2s; position: relative; }
+      .video-card { background: #fff0f6; border-radius: 22px; box-shadow: 0 4px 16px rgba(231, 84, 128, 0.10); padding: 24px 18px 18px 18px; width: 340px; text-align: center; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
       .video-card:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 8px 32px rgba(231, 84, 128, 0.18); }
       .video-card .icon { font-size: 2.5rem; margin-bottom: 10px; display: block; }
       .video-card h2 { color: #ff69b4; font-size: 1.1rem; margin: 0 0 8px 0; }
       .video-card p { color: #b54581; font-size: 0.98rem; margin: 0 0 12px 0; }
-      .video-card iframe { border: 3px solid #ffb6c1; border-radius: 14px; box-shadow: 0 2px 8px rgba(255, 182, 193, 0.12); background: #fff; }
+      .video-card .thumb { width: 300px; height: 170px; border-radius: 14px; border: 3px solid #ffb6c1; box-shadow: 0 2px 8px rgba(255, 182, 193, 0.12); object-fit: cover; }
+      .video-card .play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: rgba(255,105,180,0.85); border-radius: 50%; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+      .video-card .play-btn::after { content: ''; display: block; width: 0; height: 0; border-style: solid; border-width: 12px 0 12px 22px; border-color: transparent transparent transparent #fff; margin-left: 4px; }
+      .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center; }
+      .modal-overlay.active { display: flex; }
+      .modal-box { position: relative; width: 90%; max-width: 720px; background: #000; border-radius: 16px; overflow: hidden; }
+      .modal-box iframe { width: 100%; aspect-ratio: 16/9; border: none; }
+      .modal-close { position: absolute; top: -40px; right: 0; color: #fff; font-size: 2rem; cursor: pointer; background: rgba(255,105,180,0.8); border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
       a[href="economics.html"] { display: inline-block; margin: 20px 0 0 30px; color: #ff69b4; font-weight: bold; text-decoration: none; font-size: 1.1rem; transition: color 0.2s; }
       a[href="economics.html"]:hover { color: #b54581; text-decoration: underline; }
       footer { background: #ff1493; color: #fff; text-align: center; padding: 16px 0; border-radius: 30px 30px 0 0; margin-top: 40px; font-size: 1rem; letter-spacing: 1px; }
@@ -29,39 +36,54 @@
     </div>
     <a href="economics.html">&larr; Back to Economic Topics</a>
     <div class="video-cards">
-      <div class="video-card">
+      <div class="video-card" data-video="IG3b6RrnkzI">
         <span class="icon">💡</span>
         <h2>How to Start a Business</h2>
         <p>Learn the basics of entrepreneurship and launching your own business.</p>
-        <iframe width="300" height="170" src="https://www.youtube.com/embed/3zL1F6QOq2E" frameborder="0" allowfullscreen></iframe>
+        <div style="position:relative;display:inline-block;">
+          <img class="thumb" src="https://img.youtube.com/vi/IG3b6RrnkzI/mqdefault.jpg" alt="How to Start a Business">
+          <div class="play-btn"></div>
+        </div>
       </div>
-      <div class="video-card">
+      <div class="video-card" data-video="Z_L6FnlKEBA">
         <span class="icon">👩‍💼</span>
         <h2>Women Entrepreneurs Success Stories</h2>
         <p>Get inspired by real stories of successful women entrepreneurs.</p>
-        <iframe width="300" height="170" src="https://www.youtube.com/embed/8l4y1l5Q1g8" frameborder="0" allowfullscreen></iframe>
+        <div style="position:relative;display:inline-block;">
+          <img class="thumb" src="https://img.youtube.com/vi/Z_L6FnlKEBA/mqdefault.jpg" alt="Women Entrepreneurs">
+          <div class="play-btn"></div>
+        </div>
       </div>
-      <div class="video-card">
+      <div class="video-card" data-video="n6ecdYd8T6o">
         <span class="icon">📈</span>
         <h2>Business Planning & Marketing</h2>
         <p>Tips for business planning, marketing, and growth strategies.</p>
-        <iframe width="300" height="170" src="https://www.youtube.com/embed/1VtL2yQyQ1A" frameborder="0" allowfullscreen></iframe>
+        <div style="position:relative;display:inline-block;">
+          <img class="thumb" src="https://img.youtube.com/vi/n6ecdYd8T6o/mqdefault.jpg" alt="Business Planning">
+          <div class="play-btn"></div>
+        </div>
       </div>
-      <div class="video-card">
+      <div class="video-card" data-video="Z6qNipsW5JU">
         <span class="icon">🌟</span>
         <h2>Entrepreneurial Mindset</h2>
         <p>Develop the mindset and skills for entrepreneurial success.</p>
-        <iframe width="300" height="170" src="https://www.youtube.com/embed/7g6aVoX7Qv8" frameborder="0" allowfullscreen></iframe>
+        <div style="position:relative;display:inline-block;">
+          <img class="thumb" src="https://img.youtube.com/vi/Z6qNipsW5JU/mqdefault.jpg" alt="Entrepreneurial Mindset">
+          <div class="play-btn"></div>
+        </div>
       </div>
-      <div class="video-card">
+      <div class="video-card" data-video="dL9fzQsb6vs">
         <span class="icon">🤝</span>
         <h2>Networking for Entrepreneurs</h2>
         <p>Learn how to build valuable connections and networks.</p>
-        <iframe width="300" height="170" src="https://www.youtube.com/embed/2z3gkG7b8hA" frameborder="0" allowfullscreen></iframe>
+        <div style="position:relative;display:inline-block;">
+          <img class="thumb" src="https://img.youtube.com/vi/dL9fzQsb6vs/mqdefault.jpg" alt="Networking">
+          <div class="play-btn"></div>
+        </div>
       </div>
     </div>
-    <footer>
-      &copy; 2024 GirlForward. All rights reserved.
-    </footer>
+
+    <footer>&copy; 2025 Voice of Her. All rights reserved.</footer>
+    <script src="modal.js"></script>
 </body>
-</html> 
+</html>

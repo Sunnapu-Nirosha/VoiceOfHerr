@@ -19,12 +19,12 @@ const registerValidation = [
     .matches(/^[6-9]\d{9}$/)
     .withMessage('Please enter a valid Indian mobile number'),
   body('name')
-    .optional()
+    .optional({ values: 'falsy' })
     .trim()
     .isLength({ min: 2 })
     .withMessage('Name must be at least 2 characters long'),
   body('email')
-    .optional()
+    .optional({ values: 'falsy' })
     .isEmail()
     .withMessage('Please enter a valid email address')
 ];
@@ -48,20 +48,24 @@ router.post('/register', registerValidation, async (req, res) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ 
         error: 'Validation failed', 
+        message: 'Validation failed',
         details: errors.array() 
       });
     }
 
     const { aadhar, password, phone, name, email } = req.body;
 
-    // Check if user already exists
+    // Check if user already exists (handle legacy numeric Aadhar values in DB)
+    const numericAadhar = Number(aadhar);
+    const aadharQuery = Number.isNaN(numericAadhar) ? { aadhar } : { $or: [{ aadhar }, { aadhar: numericAadhar }] };
     const existingUser = await User.findOne({ 
-      $or: [{ aadhar }, { phone }] 
+      $or: [aadharQuery, { phone }] 
     });
 
     if (existingUser) {
       return res.status(400).json({ 
-        error: 'User with this Aadhar number or phone number already exists' 
+        error: 'User with this Aadhar number or phone number already exists',
+        message: 'User with this Aadhar number or phone number already exists'
       });
     }
 
@@ -91,7 +95,8 @@ router.post('/register', registerValidation, async (req, res) => {
     
     if (error.code === 11000) {
       return res.status(400).json({ 
-        error: 'User with this Aadhar number or phone number already exists' 
+        error: 'User with this Aadhar number or phone number already exists',
+        message: 'User with this Aadhar number or phone number already exists'
       });
     }
     
@@ -104,30 +109,37 @@ router.post('/login', loginValidation, async (req, res) => {
   try {
     // Check for validation errors
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
       return res.status(400).json({ 
         error: 'Validation failed', 
+        message: 'Validation failed',
         details: errors.array() 
       });
     }
 
     const { aadhar, password } = req.body;
 
-    // Find user by Aadhar number
-    const user = await User.findOne({ aadhar });
+    // Find user by Aadhar number. Support legacy numeric Aadhar values in DB.
+    const numericAadhar = Number(aadhar);
+    const userQuery = Number.isNaN(numericAadhar) ? { aadhar } : { $or: [{ aadhar }, { aadhar: numericAadhar }] };
+    console.log('Login attempt for aadhar:', aadhar);
+    const user = await User.findOne(userQuery);
+    console.log('User lookup result:', !!user);
     if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: 'Invalid credentials', message: 'Invalid credentials' });
     }
 
     // Check if account is active
     if (!user.isActive) {
-      return res.status(401).json({ error: 'Account is deactivated' });
+      return res.status(401).json({ error: 'Account is deactivated', message: 'Account is deactivated' });
     }
 
     // Verify password
     const isPasswordValid = await user.comparePassword(password);
+    console.log('Password valid:', isPasswordValid);
     if (!isPasswordValid) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.status(401).json({ error: 'Invalid credentials', message: 'Invalid credentials' });
     }
 
     // Update last login

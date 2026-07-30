@@ -6,95 +6,27 @@
     <title>Nutrition</title>
     <link rel="stylesheet" href="style.css">
     <style>
-      body {
-        background: linear-gradient(135deg, #e0ffe4 0%, #fffbe4 100%);
-      }
-      .nutrition-header {
-        background: linear-gradient(90deg, #4caf50 0%, #ffe082 100%);
-        color: #fff;
-        padding: 38px 0 18px 0;
-        text-align: center;
-        border-radius: 0 0 40px 40px;
-        box-shadow: 0 4px 24px rgba(76, 175, 80, 0.10);
-        margin-bottom: 30px;
-      }
-      .nutrition-header h1 {
-        margin: 0;
-        font-size: 2.6rem;
-        letter-spacing: 2px;
-      }
-      .nutrition-header p {
-        margin: 10px 0 0 0;
-        font-size: 1.2rem;
-        font-weight: 500;
-        letter-spacing: 1px;
-      }
-      .nutrition-videos {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 32px;
-        margin: 0 auto 40px auto;
-        max-width: 1100px;
-      }
-      .nutrition-card {
-        background: #fffde7;
-        border-radius: 22px;
-        box-shadow: 0 4px 16px rgba(76, 175, 80, 0.10);
-        padding: 24px 18px 18px 18px;
-        width: 340px;
-        text-align: center;
-        transition: transform 0.2s, box-shadow 0.2s;
-        position: relative;
-      }
-      .nutrition-card:hover {
-        transform: translateY(-8px) scale(1.03);
-        box-shadow: 0 8px 32px rgba(76, 175, 80, 0.18);
-      }
-      .nutrition-card .icon {
-        font-size: 2.5rem;
-        margin-bottom: 10px;
-        display: block;
-      }
-      .nutrition-card h2 {
-        color: #4caf50;
-        font-size: 1.1rem;
-        margin: 0 0 8px 0;
-      }
-      .nutrition-card p {
-        color: #b2a900;
-        font-size: 0.98rem;
-        margin: 0 0 12px 0;
-      }
-      .nutrition-card iframe {
-        border: 3px solid #ffe082;
-        border-radius: 14px;
-        box-shadow: 0 2px 8px rgba(255, 224, 130, 0.12);
-        background: #fff;
-      }
-      a[href="health.html"] {
-        display: inline-block;
-        margin: 20px 0 0 30px;
-        color: #4caf50;
-        font-weight: bold;
-        text-decoration: none;
-        font-size: 1.1rem;
-        transition: color 0.2s;
-      }
-      a[href="health.html"]:hover {
-        color: #b2a900;
-        text-decoration: underline;
-      }
-      footer {
-        background: #4caf50;
-        color: #fff;
-        text-align: center;
-        padding: 16px 0;
-        border-radius: 30px 30px 0 0;
-        margin-top: 40px;
-        font-size: 1rem;
-        letter-spacing: 1px;
-      }
+      body { background: linear-gradient(135deg, #e0ffe4 0%, #fffbe4 100%); }
+      .nutrition-header { background: linear-gradient(90deg, #4caf50 0%, #ffe082 100%); color: #fff; padding: 38px 0 18px 0; text-align: center; border-radius: 0 0 40px 40px; box-shadow: 0 4px 24px rgba(76, 175, 80, 0.10); margin-bottom: 30px; }
+      .nutrition-header h1 { margin: 0; font-size: 2.6rem; letter-spacing: 2px; }
+      .nutrition-header p { margin: 10px 0 0 0; font-size: 1.2rem; font-weight: 500; letter-spacing: 1px; }
+      .nutrition-videos { display: flex; flex-wrap: wrap; justify-content: center; gap: 32px; margin: 0 auto 40px auto; max-width: 1100px; }
+      .nutrition-card { background: #fffde7; border-radius: 22px; box-shadow: 0 4px 16px rgba(76, 175, 80, 0.10); padding: 24px 18px 18px 18px; width: 340px; text-align: center; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+      .nutrition-card:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 8px 32px rgba(76, 175, 80, 0.18); }
+      .nutrition-card .icon { font-size: 2.5rem; margin-bottom: 10px; display: block; }
+      .nutrition-card h2 { color: #4caf50; font-size: 1.1rem; margin: 0 0 8px 0; }
+      .nutrition-card p { color: #b2a900; font-size: 0.98rem; margin: 0 0 12px 0; }
+      .nutrition-card .thumb { width: 300px; height: 170px; border-radius: 14px; border: 3px solid #ffe082; box-shadow: 0 2px 8px rgba(255, 224, 130, 0.12); object-fit: cover; }
+      .nutrition-card .play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: rgba(76,175,80,0.85); border-radius: 50%; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+      .nutrition-card .play-btn::after { content: ''; display: block; width: 0; height: 0; border-style: solid; border-width: 12px 0 12px 22px; border-color: transparent transparent transparent #fff; margin-left: 4px; }
+      .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center; }
+      .modal-overlay.active { display: flex; }
+      .modal-box { position: relative; width: 90%; max-width: 720px; background: #000; border-radius: 16px; overflow: hidden; }
+      .modal-box iframe { width: 100%; aspect-ratio: 16/9; border: none; }
+      .modal-close { position: absolute; top: -40px; right: 0; color: #fff; font-size: 2rem; cursor: pointer; background: rgba(76,175,80,0.8); border: none; border-radius: 50%; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
+      a[href="health.html"] { display: inline-block; margin: 20px 0 0 30px; color: #4caf50; font-weight: bold; text-decoration: none; font-size: 1.1rem; transition: color 0.2s; }
+      a[href="health.html"]:hover { color: #b2a900; text-decoration: underline; }
+      footer { background: #4caf50; color: #fff; text-align: center; padding: 16px 0; border-radius: 30px 30px 0 0; margin-top: 40px; font-size: 1rem; letter-spacing: 1px; }
     </style>
 </head>
 <body>
@@ -104,39 +36,54 @@
     </div>
     <a href="health.html">&larr; Back to Health Topics</a>
     <div class="nutrition-videos">
-      <div class="nutrition-card">
+      <div class="nutrition-card" data-video="oo3I4CoemOQ">
         <span class="icon">🥦</span>
         <h2>Nutrition Basics</h2>
         <p>Learn the fundamentals of a balanced diet and healthy eating.</p>
-        <iframe width="300" height="170" src="https://www.youtube.com/embed/36nqG-bK2e4" frameborder="0" allowfullscreen></iframe>
+        <div style="position:relative;display:inline-block;">
+          <img class="thumb" src="https://img.youtube.com/vi/oo3I4CoemOQ/mqdefault.jpg" alt="Nutrition Basics">
+          <div class="play-btn"></div>
+        </div>
       </div>
-      <div class="nutrition-card">
+      <div class="nutrition-card" data-video="QzSpEkMVFqI">
         <span class="icon">🍎</span>
         <h2>Healthy Eating Tips</h2>
         <p>Discover practical tips for making nutritious food choices every day.</p>
-        <iframe width="300" height="170" src="https://www.youtube.com/embed/0z03xkwFbwA" frameborder="0" allowfullscreen></iframe>
+        <div style="position:relative;display:inline-block;">
+          <img class="thumb" src="https://img.youtube.com/vi/QzSpEkMVFqI/mqdefault.jpg" alt="Healthy Eating">
+          <div class="play-btn"></div>
+        </div>
       </div>
-      <div class="nutrition-card">
+      <div class="nutrition-card" data-video="FyXjvVOd7TM">
         <span class="icon">🥗</span>
         <h2>Meal Planning</h2>
         <p>Get ideas for planning and preparing healthy meals at home.</p>
-        <iframe width="300" height="170" src="https://www.youtube.com/embed/3dHNOzZ2c6s" frameborder="0" allowfullscreen></iframe>
+        <div style="position:relative;display:inline-block;">
+          <img class="thumb" src="https://img.youtube.com/vi/FyXjvVOd7TM/mqdefault.jpg" alt="Meal Planning">
+          <div class="play-btn"></div>
+        </div>
       </div>
-      <div class="nutrition-card">
+      <div class="nutrition-card" data-video="4Txq64DL6GU">
         <span class="icon">🍌</span>
         <h2>Vitamins & Minerals</h2>
         <p>Understand the importance of vitamins and minerals in your diet.</p>
-        <iframe width="300" height="170" src="https://www.youtube.com/embed/3zQJpntFz6w" frameborder="0" allowfullscreen></iframe>
+        <div style="position:relative;display:inline-block;">
+          <img class="thumb" src="https://img.youtube.com/vi/4Txq64DL6GU/mqdefault.jpg" alt="Vitamins">
+          <div class="play-btn"></div>
+        </div>
       </div>
-      <div class="nutrition-card">
+      <div class="nutrition-card" data-video="TDtkaUsOMCY">
         <span class="icon">🥕</span>
         <h2>Smart Snacking</h2>
         <p>Learn how to choose healthy snacks that fuel your body.</p>
-        <iframe width="300" height="170" src="https://www.youtube.com/embed/3dHNOzZ2c6s" frameborder="0" allowfullscreen></iframe>
+        <div style="position:relative;display:inline-block;">
+          <img class="thumb" src="https://img.youtube.com/vi/TDtkaUsOMCY/mqdefault.jpg" alt="Snacking">
+          <div class="play-btn"></div>
+        </div>
       </div>
     </div>
-    <footer>
-      &copy; 2024 HerWell. All rights reserved.
-    </footer>
+
+    <footer>&copy; 2025 Voice of Her. All rights reserved.</footer>
+    <script src="modal.js"></script>
 </body>
-</html> 
+</html>

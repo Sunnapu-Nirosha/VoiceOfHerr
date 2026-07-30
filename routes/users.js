@@ -124,12 +124,12 @@ router.get('/:userId', async (req, res) => {
 // Update user profile
 router.put('/profile', authenticateToken, [
   body('name')
-    .optional()
+    .optional({ values: 'falsy' })
     .trim()
     .isLength({ min: 2 })
     .withMessage('Name must be at least 2 characters long'),
   body('email')
-    .optional()
+    .optional({ values: 'falsy' })
     .isEmail()
     .withMessage('Please enter a valid email address'),
   body('location.latitude')

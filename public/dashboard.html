@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | Voice of Her</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="fire.js"></script>
+  <style>
+    :root {
+      --sidebar-bg: #0b0f19;
+      --sidebar-text: #94a3b8;
+      --sidebar-hover-bg: rgba(255, 255, 255, 0.05);
+      --sidebar-hover-text: #ffffff;
+      --sidebar-active-bg: rgba(194, 24, 91, 0.15);
+      --sidebar-active-text: #ffffff;
+      --sidebar-active-border: #C2185B;
+      --main-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --accent: #C2185B;
+      --accent-hover: #AD1457;
+      --accent-light: #fce4ec;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --success: #10b981;
+      --danger: #ef4444;
+      --info: #3b82f6;
+      --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
+      --shadow-card: 0 4px 20px rgba(0,0,0,0.04);
+    }
+    body {
+      background: var(--main-bg);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      margin: 0; padding: 0; box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+    * { box-sizing: inherit; }
+    .dash-wrap { display: flex; min-height: 100vh; }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px; background: var(--sidebar-bg);
+      position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
+      display: flex; flex-direction: column;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border-right: 1px solid rgba(255,255,255,0.05); overflow: hidden;
+      box-shadow: 4px 0 24px rgba(0,0,0,0.06);
+    }
+    .sidebar.collapsed { width: 88px; }
+
+    .sidebar-brand {
+      padding: 24px; display: flex; align-items: center; gap: 16px;
+      height: 88px; flex-shrink: 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05); text-decoration: none;
+    }
+    .sidebar-brand img { width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0; box-shadow: 0 4px 12px rgba(194,24,91,0.3); }
+    .sidebar-brand span {
+      font-family: var(--font-serif); font-size: 1.35rem; color: white; font-weight: 600;
+      white-space: nowrap; opacity: 1; transition: opacity 0.3s ease; letter-spacing: -0.5px;
+    }
+    .sidebar.collapsed .sidebar-brand span { opacity: 0; pointer-events: none; display: none; }
+
+    .sidebar-nav { flex: 1; padding: 24px 0; overflow-y: auto; overflow-x: hidden; }
+    .sidebar-nav::-webkit-scrollbar { width: 4px; }
+    .sidebar-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+    .sidebar-label {
+      font-size: 0.7rem; font-weight: 700; color: #64748b;
+      letter-spacing: 1.2px; text-transform: uppercase; padding: 16px 28px 8px;
+      white-space: nowrap; opacity: 1; transition: opacity 0.3s ease;
+    }
+    .sidebar.collapsed .sidebar-label { opacity: 0; display: none; }
+
+    .sidebar-link {
+      display: flex; align-items: center; gap: 16px; padding: 14px 28px;
+      font-size: 0.95rem; font-weight: 500; color: var(--sidebar-text);
+      transition: all 0.3s ease; cursor: pointer; text-decoration: none;
+      white-space: nowrap; border-left: 3px solid transparent; margin: 2px 0;
+    }
+    .sidebar.collapsed .sidebar-link { padding: 14px 0; justify-content: center; }
+    .sidebar.collapsed .sidebar-link span { display: none; }
+    .sidebar-link:hover { color: #fff; background: var(--sidebar-hover-bg); }
+    .sidebar-link.active { color: #fff; background: var(--sidebar-active-bg); border-left-color: var(--sidebar-active-border); font-weight: 600; }
+    .sidebar-link i { width: 22px; text-align: center; font-size: 1.1rem; flex-shrink: 0; transition: transform 0.3s; }
+    .sidebar-link:hover i { transform: scale(1.1); }
+    .sidebar-link.sos-nav { color: #f87171; }
+    .sidebar-link.sos-nav:hover { background: rgba(239,68,68,0.1); color: #ef4444; border-left-color: #ef4444; }
+
+    .sidebar-user-box {
+      padding: 20px 24px; background: rgba(0,0,0,0.2); flex-shrink: 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .sidebar-user-row { display: flex; align-items: center; gap: 14px; }
+    .sidebar-avatar {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--accent), #e91e63); color: white;
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1.1rem; box-shadow: 0 4px 12px rgba(194,24,91,0.3); flex-shrink: 0;
+    }
+    .sidebar-user-info-text { opacity: 1; transition: opacity 0.3s ease; white-space: nowrap; overflow: hidden; flex: 1; }
+    .sidebar.collapsed .sidebar-user-info-text { opacity: 0; pointer-events: none; display: none; }
+    .sidebar-username { font-weight: 600; font-size: 0.95rem; color: white; }
+    .sidebar-useremail { font-size: 0.8rem; color: var(--sidebar-text); margin-top: 3px; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
+    .logout-btn-icon {
+      color: var(--sidebar-text); background: none; border: none; cursor: pointer;
+      padding: 8px; border-radius: 8px; transition: all 0.2s; font-size: 1rem;
+    }
+    .logout-btn-icon:hover { color: var(--danger); background: rgba(239,68,68,0.1); }
+    .sidebar.collapsed .logout-btn-icon { display: none; }
+
+    /* Main */
+    .main {
+      flex: 1; margin-left: 280px; min-height: 100vh;
+      transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex; flex-direction: column;
+    }
+    .main.expanded { margin-left: 88px; }
+
+    /* Top Bar */
+    .topbar {
+      background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); padding: 16px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50; height: 88px;
+    }
+    .topbar-left-wrap { display: flex; align-items: center; gap: 24px; }
+    .topbar-toggle-btn {
+      width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--border);
+      background: white; color: var(--text-muted); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s; font-size: 1.1rem; box-shadow: var(--shadow-sm);
+    }
+    .topbar-toggle-btn:hover { background: #f8fafc; color: var(--text-main); border-color: #cbd5e1; }
+    .topbar-left h1 { font-size: 1.5rem; color: var(--text-main); font-weight: 700; letter-spacing: -0.5px; }
+    .topbar-left p { font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+    .topbar-right { display: flex; align-items: center; gap: 16px; }
+    .topbar-btn {
+      width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--border);
+      background: white; display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted); font-size: 1.1rem; cursor: pointer; transition: all 0.3s;
+      box-shadow: var(--shadow-sm); text-decoration: none;
+    }
+    .topbar-btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .topbar-btn.sos-btn { background: #fef2f2; color: var(--danger); border-color: #fca5a5; animation: pulse-soft 2s infinite; }
+    .topbar-btn.sos-btn:hover { background: #fee2e2; color: #dc2626; animation: none; }
+    @keyframes pulse-soft {
+      0% { box-shadow: 0 0 0 0 rgba(239,68,68,0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(239,68,68,0); }
+      100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+    }
+    .topbar-avatar {
+      width: 44px; height: 44px; background: linear-gradient(135deg, #0F172A, #334155);
+      color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 1.1rem; cursor: pointer; border: 1px solid var(--border);
+    }
+
+    /* Content */
+    .content { padding: 40px 48px; flex: 1; }
+
+    /* Welcome Card */
+    .welcome-card {
+      background: linear-gradient(120deg, #1e293b 0%, #0f172a 100%);
+      border-radius: 24px; padding: 48px; color: white;
+      margin-bottom: 32px; position: relative; overflow: hidden;
+      box-shadow: 0 20px 40px rgba(15,23,42,0.15);
+    }
+    .welcome-card::before {
+      content: ''; position: absolute; right: -50px; top: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(194,24,91,0.3) 0%, transparent 60%);
+      border-radius: 50%; z-index: 0;
+    }
+    .welcome-card::after {
+      content: ''; position: absolute; right: 20%; bottom: -150px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(56,189,248,0.2) 0%, transparent 60%);
+      border-radius: 50%; z-index: 0;
+    }
+    .welcome-content { position: relative; z-index: 2; max-width: 700px; }
+    .welcome-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.1); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.2); padding: 6px 16px;
+      border-radius: 50px; font-size: 0.8rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px; color: #38bdf8;
+    }
+    .welcome-badge i { color: #34d399; font-size: 0.7rem; }
+    .welcome-content h2 { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 500; margin-bottom: 12px; line-height: 1.2; }
+    .welcome-content p { font-size: 1.1rem; color: #cbd5e1; line-height: 1.6; font-weight: 300; }
+    .hero-actions { display: flex; gap: 16px; margin-top: 32px; }
+    .btn-hero {
+      padding: 12px 24px; border-radius: 12px; font-size: 0.95rem; font-weight: 600;
+      display: flex; align-items: center; gap: 8px; cursor: pointer; transition: all 0.3s; text-decoration: none;
+    }
+    .btn-hero.primary { background: var(--accent); color: white; border: none; box-shadow: 0 4px 12px rgba(194,24,91,0.3); }
+    .btn-hero.primary:hover { background: var(--accent-hover); transform: translateY(-2px); }
+    .btn-hero.secondary { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(8px); }
+    .btn-hero.secondary:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+
+    /* SOS Banner */
+    .sos-banner {
+      display: flex; align-items: center; gap: 24px; padding: 24px 32px;
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+      border-radius: 20px; color: white; margin-bottom: 32px;
+      cursor: pointer; transition: all 0.3s ease; text-decoration: none;
+      box-shadow: 0 10px 30px rgba(220,38,38,0.25); position: relative; overflow: hidden;
+    }
+    .sos-banner:hover { transform: translateY(-3px) scale(1.005); box-shadow: 0 15px 35px rgba(220,38,38,0.35); }
+    .sos-banner-icon {
+      width: 56px; height: 56px; background: rgba(255,255,255,0.2); border-radius: 16px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0;
+      backdrop-filter: blur(8px);
+    }
+    .sos-banner-text { flex: 1; }
+    .sos-banner h4 { font-size: 1.2rem; font-weight: 700; margin-bottom: 4px; letter-spacing: -0.3px; }
+    .sos-banner p { font-size: 0.95rem; color: rgba(255,255,255,0.85); }
+    .sos-banner .arrow {
+      font-size: 1.1rem; background: rgba(255,255,255,0.15);
+      width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s ease; backdrop-filter: blur(4px);
+    }
+    .sos-banner:hover .arrow { transform: translateX(6px); background: white; color: #dc2626; }
+
+    /* Dashboard Grid */
+    .dashboard-grid { display: grid; grid-template-columns: 2fr 1.2fr; gap: 32px; }
+
+    /* Panels */
+    .panel {
+      background: var(--card-bg); border-radius: 20px; border: 1px solid var(--border);
+      overflow: hidden; box-shadow: var(--shadow-card); display: flex; flex-direction: column;
+    }
+    .panel-head {
+      padding: 24px 28px; border-bottom: 1px solid var(--border); background: #fafafa;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .panel-title {
+      font-size: 1.1rem; font-weight: 700; color: var(--text-main);
+      letter-spacing: -0.3px; display: flex; align-items: center; gap: 10px;
+    }
+    .panel-title i { color: var(--accent); }
+    .panel-body { padding: 28px; flex: 1; }
+
+    /* Quick Actions */
+    .quick-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .quick-item {
+      display: flex; flex-direction: column; padding: 24px;
+      background: #f8fafc; border-radius: 16px; transition: all 0.3s ease;
+      cursor: pointer; text-decoration: none; border: 1px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .quick-item:hover { background: white; border-color: #cbd5e1; transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+    .quick-item::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--accent); opacity: 0; transition: opacity 0.3s;
+    }
+    .quick-item:hover::before { opacity: 1; }
+    .quick-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 16px; transition: transform 0.3s; }
+    .quick-item:hover .quick-icon { transform: scale(1.1); }
+    .quick-item:nth-child(1) .quick-icon { background: #ffe4e6; color: #e11d48; }
+    .quick-item:nth-child(2) .quick-icon { background: #dcfce7; color: #059669; }
+    .quick-item:nth-child(3) .quick-icon { background: #e0f2fe; color: #0284c7; }
+    .quick-item:nth-child(4) .quick-icon { background: #fef3c7; color: #d97706; }
+    .quick-text h4 { font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px; }
+    .quick-text p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; }
+
+    /* Emergency Contacts Section */
+    .contacts-section { display: flex; flex-direction: column; gap: 0; }
+
+    /* Add Contact Form */
+    .add-contact-form { 
+      background: #f8fafc; border-radius: 16px; padding: 24px; 
+      border: 1px solid var(--border); margin-bottom: 24px;
+    }
+    .add-contact-form h4 { 
+      font-size: 1rem; font-weight: 700; color: var(--text-main); 
+      margin-bottom: 20px; display: flex; align-items: center; gap: 8px; 
+    }
+    .add-contact-form h4 i { color: var(--accent); }
+    .form-field { margin-bottom: 16px; }
+    .form-field label {
+      display: block; font-size: 0.85rem; font-weight: 600;
+      color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .form-field input, .form-field select {
+      width: 100%; padding: 12px 16px;
+      border: 1.5px solid var(--border); border-radius: 12px;
+      font-family: 'Inter', sans-serif; font-size: 0.95rem;
+      color: var(--text-main); background: white; transition: all 0.2s;
+      outline: none;
+    }
+    .form-field input:focus, .form-field select:focus {
+      border-color: var(--accent); box-shadow: 0 0 0 3px rgba(194,24,91,0.08);
+    }
+    .form-field input::placeholder { color: #94a3b8; }
+    
+    .btn-add-contact {
+      width: 100%; padding: 13px; background: var(--accent); color: white;
+      border: none; border-radius: 12px; font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; transition: all 0.3s; display: flex; align-items: center;
+      justify-content: center; gap: 8px; font-family: 'Inter', sans-serif;
+    }
+    .btn-add-contact:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(194,24,91,0.25); }
+    .btn-add-contact:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+    /* Contact Toast */
+    .contact-toast {
+      padding: 12px 16px; border-radius: 10px; font-size: 0.9rem; font-weight: 600;
+      margin-bottom: 16px; display: none; align-items: center; gap: 8px;
+    }
+    .contact-toast.success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; display: flex; }
+    .contact-toast.error { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; display: flex; }
+
+    /* Contacts List */
+    .contacts-list-wrap h4 { font-size: 1rem; font-weight: 700; color: var(--text-main); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .contacts-list-wrap h4 i { color: var(--info); }
+    .contact-row {
+      display: flex; align-items: center; gap: 16px; padding: 16px;
+      border-radius: 14px; transition: background 0.2s; margin-bottom: 8px;
+      background: #f8fafc; border: 1px solid var(--border);
+    }
+    .contact-row:hover { background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+    .contact-c-avatar {
+      width: 46px; height: 46px; border-radius: 12px;
+      background: var(--accent-light); color: var(--accent); display: flex;
+      align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0;
+    }
+    .contact-info { flex: 1; }
+    .contact-c-name { font-size: 0.97rem; font-weight: 700; color: var(--text-main); }
+    .contact-c-phone { font-size: 0.83rem; color: var(--text-muted); margin-top: 2px; }
+    .contact-c-rel {
+      display: inline-block; font-size: 0.75rem; font-weight: 600;
+      background: #e0f2fe; color: #0369a1; padding: 2px 8px; border-radius: 20px; margin-top: 4px;
+    }
+    .contact-delete-btn {
+      width: 36px; height: 36px; border-radius: 10px; border: none;
+      background: #fef2f2; color: #ef4444; cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .contact-delete-btn:hover { background: #fee2e2; transform: scale(1.1); }
+
+    /* Empty State */
+    .empty-contacts {
+      text-align: center; padding: 40px 20px; color: var(--text-muted);
+    }
+    .empty-contacts i { font-size: 3rem; color: #e2e8f0; margin-bottom: 16px; display: block; }
+    .empty-contacts p { font-size: 0.95rem; font-weight: 500; color: var(--text-muted); }
+
+    /* Mobile */
+    .mobile-toggle {
+      display: none; position: fixed; bottom: 24px; right: 24px; z-index: 200;
+      width: 56px; height: 56px; border-radius: 50%; background: var(--accent);
+      color: white; border: none; font-size: 1.2rem; cursor: pointer;
+      box-shadow: 0 10px 25px rgba(194,24,91,0.4); align-items: center; justify-content: center;
+    }
+    .sidebar-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(15,23,42,0.6); backdrop-filter: blur(4px); z-index: 90;
+    }
+
+    @media (max-width: 1200px) {
+      .dashboard-grid { grid-template-columns: 1fr; }
+      .content { padding: 32px; }
+    }
+    @media (max-width: 992px) {
+      .welcome-card { padding: 40px 32px; }
+      .welcome-content h2 { font-size: 2rem; }
+    }
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .mobile-toggle { display: flex; }
+      .sidebar-overlay.open { display: block; }
+      .main { margin-left: 0; }
+      .topbar { padding: 16px 24px; }
+      .content { padding: 24px; }
+      .quick-grid { grid-template-columns: 1fr; }
+      .welcome-card { padding: 32px 24px; }
+      .welcome-content h2 { font-size: 1.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="dash-wrap">
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <a href="dashboard.html" class="sidebar-brand">
+      <img src="images/logo.svg" alt="Voice of Her" onerror="this.style.display='none'" />
+      <span>Voice of Her</span>
+    </a>
+
+    <div class="sidebar-user-box">
+      <div class="sidebar-user-row">
+        <div class="sidebar-avatar" id="sb-avatar">U</div>
+        <div class="sidebar-user-info-text">
+          <div class="sidebar-username" id="sb-name">User</div>
+          <div class="sidebar-useremail" id="sb-email"></div>
+        </div>
+        <button class="logout-btn-icon" id="logout-btn-sm" title="Logout">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="sidebar-label">Main</div>
+      <a href="dashboard.html" class="sidebar-link active"><i class="fas fa-grid-2"></i> <span>Dashboard</span></a>
+      <a href="sos.html" class="sidebar-link sos-nav"><i class="fas fa-exclamation-triangle"></i> <span>Emergency SOS</span></a>
+
+      <div class="sidebar-label">Health &amp; Wellness</div>
+      <a href="health.html" class="sidebar-link"><i class="fas fa-heart-pulse"></i> <span>Health Hub</span></a>
+      <a href="menstrual_hygiene.html" class="sidebar-link"><i class="fas fa-droplet"></i> <span>Menstrual Hygiene</span></a>
+      <a href="fitness.html" class="sidebar-link"><i class="fas fa-dumbbell"></i> <span>Fitness</span></a>
+      <a href="nutrition.html" class="sidebar-link"><i class="fas fa-apple-whole"></i> <span>Nutrition</span></a>
+      <a href="reproductive_education.html" class="sidebar-link"><i class="fas fa-ribbon"></i> <span>Reproductive Health</span></a>
+
+      <div class="sidebar-label">Education</div>
+      <a href="education.html" class="sidebar-link"><i class="fas fa-graduation-cap"></i> <span>Education Hub</span></a>
+      <a href="education_resources.html" class="sidebar-link"><i class="fas fa-book-open"></i> <span>Resources</span></a>
+      <a href="skills_mentorship.html" class="sidebar-link"><i class="fas fa-handshake"></i> <span>Mentorship</span></a>
+
+      <div class="sidebar-label">Economy</div>
+      <a href="economics.html" class="sidebar-link"><i class="fas fa-chart-line"></i> <span>Economy Hub</span></a>
+      <a href="entrepreneurship.html" class="sidebar-link"><i class="fas fa-lightbulb"></i> <span>Entrepreneurship</span></a>
+      <a href="financial_literacy.html" class="sidebar-link"><i class="fas fa-coins"></i> <span>Financial Literacy</span></a>
+      <a href="vocational_training.html" class="sidebar-link"><i class="fas fa-wrench"></i> <span>Vocational Training</span></a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <div class="main" id="main-content">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="topbar-left-wrap">
+        <button class="topbar-toggle-btn" id="sidebar-collapse-btn" title="Toggle Sidebar">
+          <i class="fas fa-bars-staggered"></i>
+        </button>
+        <div class="topbar-left">
+          <h1>Dashboard</h1>
+          <p id="topbar-date"></p>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <a href="sos.html" class="topbar-btn sos-btn" title="Emergency SOS"><i class="fas fa-shield-halved"></i></a>
+        <div class="topbar-avatar" id="tb-avatar">U</div>
+      </div>
+    </div>
+
+    <div class="content">
+      <!-- Welcome Hero -->
+      <div class="welcome-card">
+        <div class="welcome-content">
+          <div class="welcome-badge"><i class="fas fa-circle"></i> Your Safety Hub</div>
+          <h2 id="welcome-text">Welcome back!</h2>
+          <p>Access your personal safety tools, emergency contacts, and empowerment resources — all in one place.</p>
+          <div class="hero-actions">
+            <a href="sos.html" class="btn-hero primary"><i class="fas fa-shield-halved"></i> Go to SOS</a>
+            <a href="education.html" class="btn-hero secondary"><i class="fas fa-book-open"></i> Explore Resources</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- SOS Banner -->
+      <a href="sos.html" class="sos-banner">
+        <div class="sos-banner-icon"><i class="fas fa-bell"></i></div>
+        <div class="sos-banner-text">
+          <h4>Emergency SOS Alert System</h4>
+          <p>Tap here to immediately send an emergency alert with real-time GPS location to your trusted contacts.</p>
+        </div>
+        <div class="arrow"><i class="fas fa-arrow-right"></i></div>
+      </a>
+
+      <!-- Dashboard Grid -->
+      <div class="dashboard-grid">
+
+        <!-- Left: Quick Actions -->
+        <div class="panel">
+          <div class="panel-head">
+            <h3 class="panel-title"><i class="fas fa-bolt"></i> Quick Actions</h3>
+          </div>
+          <div class="panel-body">
+            <div class="quick-grid">
+              <a href="sos.html" class="quick-item">
+                <div class="quick-icon"><i class="fas fa-shield-halved"></i></div>
+                <div class="quick-text"><h4>Send SOS</h4><p>Trigger emergency alerts and notify contacts.</p></div>
+              </a>
+              <a href="health.html" class="quick-item">
+                <div class="quick-icon"><i class="fas fa-heart-pulse"></i></div>
+                <div class="quick-text"><h4>Health Hub</h4><p>Access wellness and health tracking resources.</p></div>
+              </a>
+              <a href="education.html" class="quick-item">
+                <div class="quick-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div class="quick-text"><h4>Education</h4><p>Learn new skills and advance your career.</p></div>
+              </a>
+              <a href="economics.html" class="quick-item">
+                <div class="quick-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="quick-text"><h4>Economy</h4><p>Financial tools and entrepreneurship tips.</p></div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Emergency Contacts -->
+        <div class="panel">
+          <div class="panel-head">
+            <h3 class="panel-title"><i class="fas fa-address-book"></i> Emergency Contacts</h3>
+          </div>
+          <div class="panel-body contacts-section">
+
+            <!-- Add Contact Form -->
+            <div class="add-contact-form">
+              <h4><i class="fas fa-user-plus"></i> Add New Contact</h4>
+
+              <div id="contact-toast" class="contact-toast"></div>
+
+              <div class="form-field">
+                <label>Full Name</label>
+                <input type="text" id="contact-name" placeholder="e.g. Priya Sharma" autocomplete="off" />
+              </div>
+              <div class="form-field">
+                <label>Phone Number</label>
+                <input type="tel" id="contact-phone" placeholder="e.g. 9876543210 or +91 98765 43210" autocomplete="off" />
+              </div>
+              <div class="form-field">
+                <label>Relationship</label>
+                <select id="contact-relationship">
+                  <option value="">Select relationship</option>
+                  <option value="Mother">Mother</option>
+                  <option value="Father">Father</option>
+                  <option value="Sister">Sister</option>
+                  <option value="Brother">Brother</option>
+                  <option value="Friend">Friend</option>
+                  <option value="Husband">Husband</option>
+                  <option value="Relative">Relative</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <button class="btn-add-contact" id="btn-add-contact" onclick="handleAddContact()">
+                <i class="fas fa-plus"></i> Add Contact
+              </button>
+            </div>
+
+            <!-- Contacts List -->
+            <div class="contacts-list-wrap">
+              <h4><i class="fas fa-users"></i> Saved Contacts</h4>
+              <div id="contacts-list">
+                <div class="empty-contacts">
+                  <i class="fas fa-user-plus"></i>
+                  <p>No contacts added yet.<br>Add your first contact above.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile Toggle -->
+<button class="mobile-toggle" id="mobile-toggle"><i class="fas fa-bars"></i></button>
+
+<script>
+  // Auth guard
+  if (typeof isLoggedIn === 'function' && !isLoggedIn()) {
+    window.location.href = 'index.html';
+  }
+
+  // Logout
+  const logoutBtnSm = document.getElementById('logout-btn-sm');
+  if (logoutBtnSm) {
+    logoutBtnSm.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (typeof logout === 'function') logout();
+    });
+  }
+
+  // Sidebar collapse
+  const sidebar = document.getElementById('sidebar');
+  const mainContent = document.getElementById('main-content');
+  const overlay = document.getElementById('sidebar-overlay');
+
+  if (localStorage.getItem('sidebar-collapsed') === 'true') {
+    sidebar.classList.add('collapsed');
+    mainContent.classList.add('expanded');
+  }
+
+  document.getElementById('sidebar-collapse-btn').addEventListener('click', () => {
+    sidebar.classList.toggle('collapsed');
+    mainContent.classList.toggle('expanded');
+    localStorage.setItem('sidebar-collapsed', sidebar.classList.contains('collapsed'));
+  });
+
+  document.getElementById('mobile-toggle').addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('open');
+  });
+  overlay.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+  });
+
+  // Date
+  const now = new Date();
+  const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const dateEl = document.getElementById('topbar-date');
+  if (dateEl) dateEl.textContent = now.toLocaleDateString('en-US', dateOptions);
+
+  // Greeting
+  const hours = now.getHours();
+  let greeting = 'Good morning';
+  if (hours >= 12 && hours < 17) greeting = 'Good afternoon';
+  else if (hours >= 17) greeting = 'Good evening';
+
+  // Load user info
+  async function loadUserInfo() {
+    try {
+      let name = localStorage.getItem('userName') || '';
+      let email = localStorage.getItem('userPhone') || '';
+
+      if (!name && typeof getUserProfile === 'function') {
+        const profile = await getUserProfile();
+        name = profile.name || 'User';
+        email = profile.email || profile.phone || '';
+      }
+
+      if (!name) name = 'User';
+      setUserInfo(name, email);
+    } catch (e) {
+      setUserInfo('User', '');
+    }
+  }
+
+  function setUserInfo(name, detail) {
+    const welcomeEl = document.getElementById('welcome-text');
+    if (welcomeEl) welcomeEl.textContent = greeting + ', ' + name + '!';
+    const sbAvatar = document.getElementById('sb-avatar');
+    if (sbAvatar) sbAvatar.textContent = name.charAt(0).toUpperCase();
+    const sbName = document.getElementById('sb-name');
+    if (sbName) sbName.textContent = name;
+    const sbEmail = document.getElementById('sb-email');
+    if (sbEmail) sbEmail.textContent = detail;
+    const tbAvatar = document.getElementById('tb-avatar');
+    if (tbAvatar) tbAvatar.textContent = name.charAt(0).toUpperCase();
+  }
+
+  // =========== Emergency Contacts ===========
+  let currentContacts = [];
+
+  async function loadContacts() {
+    try {
+      if (typeof getEmergencyContacts === 'function') {
+        const contacts = await getEmergencyContacts();
+        currentContacts = contacts || [];
+        renderContacts(currentContacts);
+      }
+    } catch (e) {
+      console.warn('Could not load contacts:', e.message);
+      renderContacts([]);
+    }
+  }
+
+  function renderContacts(contacts) {
+    const list = document.getElementById('contacts-list');
+    if (!list) return;
+
+    if (!contacts || contacts.length === 0) {
+      list.innerHTML = `
+        <div class="empty-contacts">
+          <i class="fas fa-user-plus"></i>
+          <p>No contacts added yet.<br>Add your first contact above.</p>
+        </div>`;
+      return;
+    }
+
+    list.innerHTML = contacts.map(c => `
+      <div class="contact-row" id="contact-${c._id || c.id}">
+        <div class="contact-c-avatar">${c.name ? c.name.charAt(0).toUpperCase() : '?'}</div>
+        <div class="contact-info">
+          <div class="contact-c-name">${escHtml(c.name || 'Contact')}</div>
+          <div class="contact-c-phone">${escHtml(c.phone || '')}</div>
+          ${c.relationship ? `<span class="contact-c-rel">${escHtml(c.relationship)}</span>` : ''}
+        </div>
+        <button class="contact-delete-btn" onclick="handleDeleteContact('${c._id || c.id}')" title="Remove contact">
+          <i class="fas fa-trash-alt"></i>
+        </button>
+      </div>
+    `).join('');
+  }
+
+  function escHtml(str) {
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  function showToast(message, type) {
+    const toast = document.getElementById('contact-toast');
+    if (!toast) return;
+    toast.textContent = '';
+    const icon = document.createElement('i');
+    icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+    toast.appendChild(icon);
+    toast.appendChild(document.createTextNode(' ' + message));
+    toast.className = 'contact-toast ' + type;
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => {
+      toast.className = 'contact-toast';
+    }, 4000);
+  }
+
+  async function handleAddContact() {
+    const nameEl = document.getElementById('contact-name');
+    const phoneEl = document.getElementById('contact-phone');
+    const relEl = document.getElementById('contact-relationship');
+    const btn = document.getElementById('btn-add-contact');
+
+    const name = nameEl.value.trim();
+    // Sanitize phone: strip +91 country code, spaces, dashes, parentheses
+    const rawPhone = phoneEl.value.trim();
+    const phone = rawPhone.replace(/^\+91\s*/, '').replace(/[\s\-().]/g, '');
+    const relationship = relEl.value;
+
+    if (!name) { showToast('Please enter a contact name.', 'error'); nameEl.focus(); return; }
+    if (!phone) { showToast('Please enter a phone number.', 'error'); phoneEl.focus(); return; }
+    if (!/^[6-9]\d{9}$/.test(phone)) { showToast('Enter a valid 10-digit Indian mobile number (e.g. 9876543210).', 'error'); phoneEl.focus(); return; }
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...';
+
+    try {
+      if (typeof addEmergencyContact === 'function') {
+        await addEmergencyContact(name, phone, relationship);
+        showToast('Contact added successfully!', 'success');
+        nameEl.value = '';
+        phoneEl.value = '';
+        relEl.value = '';
+        await loadContacts();
+      } else {
+        showToast('Contact feature not available.', 'error');
+      }
+    } catch (e) {
+      showToast(e.message || 'Failed to add contact. Try again.', 'error');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-plus"></i> Add Contact';
+    }
+  }
+
+  async function handleDeleteContact(contactId) {
+    if (!confirm('Remove this emergency contact?')) return;
+    try {
+      if (typeof deleteEmergencyContact === 'function') {
+        await deleteEmergencyContact(contactId);
+        showToast('Contact removed.', 'success');
+        await loadContacts();
+      }
+    } catch (e) {
+      showToast(e.message || 'Could not delete contact.', 'error');
+    }
+  }
+
+  // Allow pressing Enter in inputs to submit
+  document.getElementById('contact-name').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('contact-phone').focus(); });
+  document.getElementById('contact-phone').addEventListener('keydown', e => { if (e.key === 'Enter') handleAddContact(); });
+
+  // Init
+  loadUserInfo();
+  loadContacts();
+</script>
+</body>
+</html>

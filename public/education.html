@@ -1,111 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EmpowerHer: Education & Opportunities</title>
-    <style>
-      body {
-        font-family: "Arial", sans-serif;
-        margin: 0;
-        padding: 0;
-        background: linear-gradient(135deg, #f0f8ff 0%, #ffe4ec 100%);
-        color: #333;
-      }
-      .edu-header {
-        background: linear-gradient(90deg, #ffb6c1 0%, #e6e6fa 100%);
-        color: #fff;
-        padding: 40px 0 20px 0;
-        text-align: center;
-        border-radius: 0 0 40px 40px;
-        box-shadow: 0 4px 24px rgba(231, 84, 128, 0.10);
-        margin-bottom: 30px;
-      }
-      .edu-header h1 {
-        margin: 0;
-        font-size: 2.6rem;
-        letter-spacing: 2px;
-      }
-      .edu-header p {
-        margin: 10px 0 0 0;
-        font-size: 1.2rem;
-        font-weight: 500;
-        letter-spacing: 1px;
-      }
-      .edu-topics-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 32px;
-        margin: 0 auto 40px auto;
-        max-width: 1100px;
-      }
-      .edu-card {
-        background: #fff0f6;
-        border-radius: 24px;
-        box-shadow: 0 4px 16px rgba(231, 84, 128, 0.10);
-        padding: 32px 28px 24px 28px;
-        width: 260px;
-        text-align: center;
-        transition: transform 0.2s, box-shadow 0.2s;
-        position: relative;
-        text-decoration: none;
-      }
-      .edu-card:hover {
-        transform: translateY(-10px) scale(1.04);
-        box-shadow: 0 8px 32px rgba(231, 84, 128, 0.18);
-      }
-      .edu-card .icon {
-        font-size: 3.2rem;
-        margin-bottom: 12px;
-        display: block;
-      }
-      .edu-card h2 {
-        color: #ff69b4;
-        font-size: 1.3rem;
-        margin: 0 0 10px 0;
-      }
-      .edu-card p {
-        color: #b54581;
-        font-size: 1rem;
-        margin: 0 0 18px 0;
-      }
-      footer {
-        background: #ffb6c1;
-        color: #fff;
-        text-align: center;
-        padding: 18px 0;
-        border-radius: 30px 30px 0 0;
-        margin-top: 40px;
-        font-size: 1rem;
-        letter-spacing: 1px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="edu-header">
-      <h1>Education & Opportunities</h1>
-      <p>Your Gateway to Growth and Success</p>
-    </div>
-    <div class="edu-topics-list">
-      <a class="edu-card" href="education_resources.html">
-        <span class="icon">📚</span>
-        <h2>Education Resources</h2>
-        <p>Access a curated list of educational resources to support your academic journey.</p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Education & Opportunities | Voice of Her</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script type="module" src="fire.js"></script>
+</head>
+<body>
+
+<header id="main-header">
+  <div class="header-inner">
+    <a href="dashboard.html" class="logo">
+      <img src="images/logo.svg" alt="Voice of Her" />
+      <span>Voice of Her</span>
+    </a>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="sos.html" class="nav-cta" style="background:#EF5350;">SOS</a>
+      <a href="#" id="logout-btn" class="nav-cta" style="background:var(--gray);">Logout</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <h1>Education & Opportunities</h1>
+  <p>Your gateway to growth, knowledge, and success</p>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="cards-grid">
+      <a href="education_resources.html" class="topic-card">
+        <div class="topic-card-img"><img src="images/education-main.jpg" alt="Education Resources" /></div>
+        <div class="topic-card-body">
+          <h3>Education Resources</h3>
+          <p>Curated educational resources to support your academic journey.</p>
+          <span class="service-link">Explore <i class="fas fa-arrow-right"></i></span>
+        </div>
       </a>
-      <a class="edu-card" href="skills_mentorship.html">
-        <span class="icon">🤝</span>
-        <h2>Skills & Mentorship</h2>
-        <p>Develop valuable skills and connect with mentors to guide your career.</p>
+      <a href="skills_mentorship.html" class="topic-card">
+        <div class="topic-card-img"><img src="images/mentorship.jpg" alt="Skills & Mentorship" /></div>
+        <div class="topic-card-body">
+          <h3>Skills & Mentorship</h3>
+          <p>Develop professional skills and connect with experienced mentors.</p>
+          <span class="service-link">Explore <i class="fas fa-arrow-right"></i></span>
+        </div>
       </a>
-      <a class="edu-card" href="additional_resources_edu.html">
-        <span class="icon">🔗</span>
-        <h2>Additional Resources</h2>
-        <p>Find additional support and information for your growth.</p>
+      <a href="additional_resources_edu.html" class="topic-card">
+        <div class="topic-card-img"><img src="images/community.jpg" alt="Resources" /></div>
+        <div class="topic-card-body">
+          <h3>Additional Resources</h3>
+          <p>More support and information for your personal and professional growth.</p>
+          <span class="service-link">Explore <i class="fas fa-arrow-right"></i></span>
+        </div>
       </a>
     </div>
-    <footer>
-      &copy; 2024 EmpowerHer. All rights reserved.
-    </footer>
-  </body>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-brand-logo">
+        <img src="images/logo.svg" alt="Voice of Her" />
+        <span>Voice of Her</span>
+      </div>
+      <p>Empowering women through safety, education, health, and economic development.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="sos.html">Emergency SOS</a></li>
+        <li><a href="health.html">Health</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="economics.html">Economy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Voice of Her. All rights reserved.</p>
+  </div>
+</footer>
+
+<script type="module">
+  import { isLoggedIn, logout } from './fire.js';
+  if (!isLoggedIn()) window.location.href = 'index.html';
+  document.getElementById('logout-btn').addEventListener('click', function(e) { e.preventDefault(); logout(); });
+  window.addEventListener('scroll', function() {
+    document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50);
+  });
+</script>
+
+</body>
 </html>

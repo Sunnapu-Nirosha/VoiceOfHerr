@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#d32f2f" rx="12"/>
+  <circle cx="200" cy="120" r="60" fill="#ffcdd2"/>
+  <text x="200" y="135" text-anchor="middle" font-size="48" font-family="Arial, sans-serif" font-weight="bold" fill="#d32f2f">SOS</text>
+  <text x="200" y="220" text-anchor="middle" font-size="16" font-family="Arial, sans-serif" fill="#fff">Emergency Alert System</text>
+</svg>

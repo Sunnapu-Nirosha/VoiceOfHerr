@@ -1,9 +1,13 @@
 // Backend API configuration
-// Auto-detect backend base URL
-const API_BASE_URL = window.location.hostname.includes("localhost")
-  ? "http://localhost:3000/api"
-  : "https://voiceofher.onrender.com/api";
-
+// set backend base URL (use render URL in production or localhost for local dev)
+const BASE_URL = (function() {
+  // If developing locally, point to local backend
+  if (location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+    return 'http://localhost:3001/api';
+  }
+  // Production/deployed API
+  return 'https://voiceofher.onrender.com/api';
+})();
 
 // Utility functions
 function getCookie(name) {
@@ -24,72 +28,61 @@ function removeCookie(name) {
 }
 
 // API request helper
-async function apiRequest(endpoint, options = {}) {
+async function apiRequest(path, options = {}) {
+  const url = path.startsWith('http') ? path : `${BASE_URL}${path.startsWith('/') ? '' : '/'}${path}`;
+  // Attach auth token if available
   const token = localStorage.getItem('authToken');
-  
-  const defaultOptions = {
-    headers: {
-      'Content-Type': 'application/json',
-      ...(token && { 'Authorization': `Bearer ${token}` })
-    }
-  };
-
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-    ...defaultOptions,
-    ...options,
-    headers: {
-      ...defaultOptions.headers,
-      ...options.headers
-    }
-  });
-
-  if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: 'Network error' }));
-    throw new Error(error.error || `HTTP ${response.status}`);
+  const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+  if (token && !headers['Authorization']) {
+    headers['Authorization'] = `Bearer ${token}`;
   }
 
-  return response.json();
+  const opts = {
+    method: options.method || 'GET',
+    headers,
+    body: options.body ? (typeof options.body === 'string' ? options.body : JSON.stringify(options.body)) : undefined,
+  };
+
+  const res = await fetch(url, opts);
+  const text = await res.text();
+  let body;
+  try { body = JSON.parse(text); } catch { body = text; }
+
+  if (!res.ok) {
+    const msg = (body && body.message) ? body.message : `Request failed (${res.status})`;
+    throw new Error(msg);
+  }
+  return body;
 }
 
 // Authentication functions
-async function registerUser(aadhar, password, phone, name = '', email = '') {
-  try {
-    const response = await apiRequest('/auth/register', {
-      method: 'POST',
-      body: JSON.stringify({
-        aadhar,
-        password,
-        phone,
-        name,
-        email
-      })
-    });
+async function registerUser(payload) {
+  const response = await apiRequest('/auth/register', { method: 'POST', body: payload });
 
-    // Store token and user info
+  // Store token and user info so user is logged in after registration
+  if (response && response.token) {
     localStorage.setItem('authToken', response.token);
     localStorage.setItem('userId', response.user._id);
+    localStorage.setItem('userName', response.user.name || '');
+    localStorage.setItem('userPhone', response.user.phone || '');
     setCookie('userId', response.user._id);
-
-    return response;
-  } catch (error) {
-    console.error('Registration error:', error);
-    throw error;
   }
+
+  return response;
 }
 
 async function loginUser(aadhar, password) {
   try {
     const response = await apiRequest('/auth/login', {
       method: 'POST',
-      body: JSON.stringify({
-        aadhar,
-        password
-      })
+      body: { aadhar, password }
     });
 
     // Store token and user info
     localStorage.setItem('authToken', response.token);
     localStorage.setItem('userId', response.user._id);
+    localStorage.setItem('userName', response.user.name || '');
+    localStorage.setItem('userPhone', response.user.phone || '');
     setCookie('userId', response.user._id);
 
     return response;
@@ -103,7 +96,7 @@ function logout() {
   localStorage.removeItem('authToken');
   localStorage.removeItem('userId');
   removeCookie('userId');
-  window.location.href = 'login.html';
+  window.location.href = 'index.html';
 }
 
 function isLoggedIn() {
@@ -461,12 +454,18 @@ async function sendSOSAlert(description = '', emergencyType = 'other') {
 
 // Initialize app
 function initializeApp() {
-  // Check if user is logged in
-  if (!isLoggedIn()) {
-    // Redirect to login if not on login or register page
-    const currentPage = window.location.pathname.split('/').pop();
+  const currentPage = window.location.pathname.split('/').pop();
+  
+  if (isLoggedIn()) {
+    // Redirect logged-in users to dashboard if on index page
+    if (currentPage === 'index.html' || currentPage === '' || currentPage === '/') {
+      window.location.href = 'dashboard.html';
+      return;
+    }
+  } else {
+    // Redirect non-logged-in users to landing page if on protected pages
     if (currentPage !== 'login.html' && currentPage !== 'Register.html' && currentPage !== 'index.html') {
-      window.location.href = 'login.html';
+      window.location.href = 'index.html';
     }
   }
 
@@ -491,6 +490,17 @@ function initializeApp() {
   });
 }
 
+// Dashboard stats function
+async function getDashboardStats() {
+  try {
+    const response = await apiRequest('/dashboard/stats');
+    return response;
+  } catch (error) {
+    console.error('Get dashboard stats error:', error);
+    throw error;
+  }
+}
+
 // Make functions available globally for non-module usage
 window.registerUser = registerUser;
 window.loginUser = loginUser;
@@ -511,6 +521,7 @@ window.getAllUsersNumbers = getAllUsersNumbers;
 window.getCurrentLocation = getCurrentLocation;
 window.getAddressFromCoordinates = getAddressFromCoordinates;
 window.sendSOSAlert = sendSOSAlert;
+window.getDashboardStats = getDashboardStats;
 window.initializeApp = initializeApp;
 
 // Debug function to check emergency contacts
@@ -526,4 +537,4 @@ window.debugEmergencyContacts = async function() {
 };
 
 // Auto-initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', initializeApp); 
+document.addEventListener('DOMContentLoaded', initializeApp);

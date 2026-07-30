@@ -1,130 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Health Topics</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-      body {
-        background: linear-gradient(135deg, #ffe4ec 0%, #ffe4e1 100%);
-      }
-      .health-header {
-        background: linear-gradient(90deg, #e75480 0%, #ffb6c1 100%);
-        color: #fff;
-        padding: 40px 0 20px 0;
-        text-align: center;
-        border-radius: 0 0 40px 40px;
-        box-shadow: 0 4px 24px rgba(231, 84, 128, 0.10);
-        margin-bottom: 30px;
-      }
-      .health-header h1 {
-        margin: 0;
-        font-size: 2.8rem;
-        letter-spacing: 2px;
-      }
-      .health-header p {
-        margin: 10px 0 0 0;
-        font-size: 1.3rem;
-        font-weight: 500;
-        letter-spacing: 1px;
-      }
-      .health-topics-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 32px;
-        margin: 0 auto 40px auto;
-        max-width: 900px;
-      }
-      .health-card {
-        background: #fff0f6;
-        border-radius: 24px;
-        box-shadow: 0 4px 16px rgba(231, 84, 128, 0.10);
-        padding: 32px 28px 24px 28px;
-        width: 260px;
-        text-align: center;
-        transition: transform 0.2s, box-shadow 0.2s;
-        position: relative;
-      }
-      .health-card:hover {
-        transform: translateY(-10px) scale(1.04);
-        box-shadow: 0 8px 32px rgba(231, 84, 128, 0.18);
-      }
-      .health-card .icon {
-        font-size: 3.2rem;
-        margin-bottom: 12px;
-        display: block;
-      }
-      .health-card h2 {
-        color: #e75480;
-        font-size: 1.3rem;
-        margin: 0 0 10px 0;
-      }
-      .health-card p {
-        color: #b54581;
-        font-size: 1rem;
-        margin: 0 0 18px 0;
-      }
-      .health-card a {
-        display: inline-block;
-        background: linear-gradient(90deg, #ffb6c1 0%, #e75480 100%);
-        color: #fff;
-        font-weight: bold;
-        padding: 10px 28px;
-        border-radius: 20px;
-        text-decoration: none;
-        font-size: 1.1rem;
-        transition: background 0.2s;
-      }
-      .health-card a:hover {
-        background: linear-gradient(90deg, #e75480 0%, #ffb6c1 100%);
-      }
-      footer {
-        background: #e75480;
-        color: #fff;
-        text-align: center;
-        padding: 18px 0;
-        border-radius: 30px 30px 0 0;
-        margin-top: 40px;
-        font-size: 1rem;
-        letter-spacing: 1px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="health-header">
-      <h1>Health Topics</h1>
-      <p>Empowering you with knowledge for a healthier life!</p>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Health & Wellness | Voice of Her</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script type="module" src="fire.js"></script>
+</head>
+<body>
+
+<header id="main-header">
+  <div class="header-inner">
+    <a href="dashboard.html" class="logo">
+      <img src="images/logo.svg" alt="Voice of Her" />
+      <span>Voice of Her</span>
+    </a>
+    <nav>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="sos.html" class="nav-cta" style="background:#EF5350;">SOS</a>
+      <a href="#" id="logout-btn" class="nav-cta" style="background:var(--gray);">Logout</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <h1>Health & Wellness</h1>
+  <p>Knowledge for a healthier, stronger life</p>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="cards-grid">
+      <a href="menstrual_hygiene.html" class="topic-card">
+        <div class="topic-card-img"><img src="images/menstrual-hygiene.jpg" alt="Menstrual Hygiene" /></div>
+        <div class="topic-card-body">
+          <h3>Menstrual Hygiene</h3>
+          <p>Safe and healthy menstrual practices for physical and emotional well-being.</p>
+          <span class="service-link">Explore <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </a>
+      <a href="fitness.html" class="topic-card">
+        <div class="topic-card-img"><img src="images/fitness.jpg" alt="Fitness" /></div>
+        <div class="topic-card-body">
+          <h3>Fitness</h3>
+          <p>Workout routines and tips to keep your body active and strong.</p>
+          <span class="service-link">Explore <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </a>
+      <a href="nutrition.html" class="topic-card">
+        <div class="topic-card-img"><img src="images/nutrition.jpg" alt="Nutrition" /></div>
+        <div class="topic-card-body">
+          <h3>Nutrition</h3>
+          <p>Nourish your body with the right foods and healthy habits.</p>
+          <span class="service-link">Explore <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </a>
+      <a href="reproductive_education.html" class="topic-card">
+        <div class="topic-card-img"><img src="images/reproductive-health.jpg" alt="Reproductive Health" /></div>
+        <div class="topic-card-body">
+          <h3>Reproductive Education</h3>
+          <p>Information about reproductive health and safe practices.</p>
+          <span class="service-link">Explore <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </a>
     </div>
-    <div class="health-topics-list">
-      <div class="health-card">
-        <span class="icon">🩸</span>
-        <h2>Menstrual Hygiene</h2>
-        <p>Learn about safe and healthy menstrual practices for well-being.</p>
-        <a href="menstrual_hygiene.html">Explore</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-brand-logo">
+        <img src="images/logo.svg" alt="Voice of Her" />
+        <span>Voice of Her</span>
       </div>
-      <div class="health-card">
-        <span class="icon">💪</span>
-        <h2>Fitness</h2>
-        <p>Discover tips and routines to keep your body active and strong.</p>
-        <a href="fitness.html">Explore</a>
-      </div>
-      <div class="health-card">
-        <span class="icon">🥗</span>
-        <h2>Nutrition</h2>
-        <p>Find out how to nourish your body with the right foods and habits.</p>
-        <a href="nutrition.html">Explore</a>
-      </div>
-      <div class="health-card">
-        <span class="icon">🌸</span>
-        <h2>Reproductive Education</h2>
-        <p>Get informed about reproductive health and safe practices.</p>
-        <a href="reproductive_education.html">Explore</a>
-      </div>
+      <p>Empowering women through safety, education, health, and economic development.</p>
     </div>
-    <footer>
-      &copy; 2024 HerWell. All rights reserved.
-    </footer>
-  </body>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="sos.html">Emergency SOS</a></li>
+        <li><a href="health.html">Health</a></li>
+        <li><a href="education.html">Education</a></li>
+        <li><a href="economics.html">Economy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Voice of Her. All rights reserved.</p>
+  </div>
+</footer>
+
+<script type="module">
+  import { isLoggedIn, logout } from './fire.js';
+  if (!isLoggedIn()) window.location.href = 'index.html';
+  document.getElementById('logout-btn').addEventListener('click', function(e) { e.preventDefault(); logout(); });
+  window.addEventListener('scroll', function() {
+    document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50);
+  });
+</script>
+
+</body>
 </html>
