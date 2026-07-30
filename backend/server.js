@@ -33,7 +33,7 @@ app.use(cors({ origin: true, credentials: true }));
 app.options('*', cors());
 
 // Serve static files from the public directory
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Rate limiting
 const limiter = rateLimit({
@@ -102,7 +102,7 @@ app.get('/api/dashboard/stats', authenticateToken, async (req, res) => {
 // Firebase web config endpoint (serves FCM config to frontend)
 app.get('/api/firebase-config', (req, res) => {
   try {
-    const config = require('./public/firebase-web-config.js');
+    const config = require('../frontend/firebase-web-config.js');
     res.json(config);
   } catch (error) {
     res.status(500).json({ error: 'Firebase config not found' });
@@ -111,7 +111,7 @@ app.get('/api/firebase-config', (req, res) => {
 
 // Serve the main index.html file
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
 });
 
 // Error handling middleware

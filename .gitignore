@@ -1,6 +1,6 @@
-node_modules/
-.env
-service-account-key.json
-routes/service-account-key.json.json
+backend/node_modules/
+backend/.env
+backend/service-account-key.json
+backend/routes/service-account-key.json.json
 *.zip
-server_out.log
+backend/server_out.log
