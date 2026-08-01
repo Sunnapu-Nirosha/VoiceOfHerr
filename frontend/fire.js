@@ -1,12 +1,12 @@
 // Backend API configuration
 // set backend base URL (use render URL in production or localhost for local dev)
 const BASE_URL = (function() {
-  // If developing locally, point to local backend
-  if (location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+  // If developing locally by opening the HTML file directly, use the local node server
+  if (location.protocol === 'file:') {
     return 'http://localhost:3001/api';
   }
-  // Production/deployed API
-  return 'https://voiceofher.onrender.com/api';
+  // Otherwise, use a relative path (works on localhost:3001 and Vercel)
+  return '/api';
 })();
 
 // Utility functions
