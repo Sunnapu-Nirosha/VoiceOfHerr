@@ -18,23 +18,21 @@
     </filter>
   </defs>
   
-  <!-- Background circle with gradient -->
-  <circle cx="100" cy="100" r="98" fill="url(#logoGrad)"/>
+  <!-- Background circle removed -->
   
-  <!-- Subtle inner ring -->
-  <circle cx="100" cy="100" r="88" fill="none" stroke="white" stroke-width="1" opacity="0.2"/>
+  <!-- Subtle inner ring removed -->
   
   <!-- Female symbol - Venus -->
-  <circle cx="100" cy="72" r="22" fill="none" stroke="white" stroke-width="5"/>
-  <line x1="100" y1="94" x2="100" y2="140" stroke="white" stroke-width="5" stroke-linecap="round"/>
-  <line x1="78" y1="118" x2="122" y2="118" stroke="white" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="100" cy="72" r="22" fill="none" stroke="url(#logoGrad)" stroke-width="10"/>
+  <line x1="100" y1="94" x2="100" y2="140" stroke="url(#logoGrad)" stroke-width="10" stroke-linecap="round"/>
+  <line x1="78" y1="118" x2="122" y2="118" stroke="url(#logoGrad)" stroke-width="10" stroke-linecap="round"/>
   
   <!-- Speech bubble representing "Voice" -->
   <path d="M130 55 Q155 55 155 78 Q155 95 135 98 L128 108 L122 95 Q110 98 105 90 Q100 82 100 72 Q100 55 118 55 Z" 
-        fill="white" opacity="0.95" filter="url(#glow)"/>
+        fill="url(#logoGrad)" opacity="0.95" filter="url(#glow)"/>
   
   <!-- Dots inside speech bubble for "..." -->
-  <circle cx="118" cy="75" r="3" fill="#B8336A"/>
-  <circle cx="130" cy="75" r="3" fill="#B8336A"/>
-  <circle cx="142" cy="75" r="3" fill="#B8336A"/>
+  <circle cx="118" cy="75" r="4" fill="white"/>
+  <circle cx="130" cy="75" r="4" fill="white"/>
+  <circle cx="142" cy="75" r="4" fill="white"/>
 </svg>

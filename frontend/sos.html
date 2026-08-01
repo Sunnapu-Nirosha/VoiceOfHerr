@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Emergency SOS | Voice of Her</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=3" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <script type="module" src="fire.js"></script>
+  <script type="module" src="fire.js?v=3"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -130,7 +130,7 @@
 <!-- Header -->
 <header class="sos-header">
   <a href="dashboard.html" class="sos-logo">
-    <img src="images/logo.svg" alt="Voice of Her" />
+    <img src="images/new_logo.png" alt="Voice of Her" />
     <span>Voice of Her</span>
   </a>
   <div class="sos-nav-right">
@@ -177,14 +177,14 @@
 </div>
 
 <script type="module">
-  import { isLoggedIn, logout, getEmergencyContacts } from './fire.js';
 
-  if (!isLoggedIn()) window.location.href = 'index.html';
+
+  if (!window.isLoggedIn()) window.location.href = 'index.html';
 
   // Load contacts for SOS view
   async function loadContacts() {
     try {
-      const contacts = await getEmergencyContacts();
+      const contacts = await window.getEmergencyContacts();
       const list = document.getElementById('contacts-list');
       if (contacts && contacts.length > 0) {
         list.innerHTML = contacts.map(c =>

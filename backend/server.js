@@ -22,9 +22,9 @@ app.use(helmet({
       imgSrc: ["'self'", "data:", "https:"],
       styleSrc: ["'self'", "'unsafe-inline'", "https:"],
       fontSrc: ["'self'", "https:"],
-      scriptSrc: ["'self'", "https://www.gstatic.com", "https://www.googleapis.com"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://www.gstatic.com", "https://www.googleapis.com"],
       frameSrc: ["'self'", "https://www.youtube.com", "https://youtube.com"],
-      connectSrc: ["'self'", "https://fcm.googleapis.com", "https://firebaseinstallations.googleapis.com"],
+      connectSrc: ["'self'", "https://fcm.googleapis.com", "https://firebaseinstallations.googleapis.com", "https://api.web3forms.com"],
       workerSrc: ["'self'", "blob:"],
     }
   }

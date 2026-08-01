@@ -83,7 +83,6 @@ async function loginUser(aadhar, password) {
     localStorage.setItem('userId', response.user._id);
     localStorage.setItem('userName', response.user.name || '');
     localStorage.setItem('userPhone', response.user.phone || '');
-    setCookie('userId', response.user._id);
 
     return response;
   } catch (error) {
@@ -95,7 +94,6 @@ async function loginUser(aadhar, password) {
 function logout() {
   localStorage.removeItem('authToken');
   localStorage.removeItem('userId');
-  removeCookie('userId');
   window.location.href = 'index.html';
 }
 

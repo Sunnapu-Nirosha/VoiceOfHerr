@@ -4,26 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard | Voice of Her</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=4" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script src="fire.js"></script>
+  <script src="fire.js?v=4"></script>
+  <script>
+    // Just a quick check to make sure the page is actually refreshing
+    console.log("Dashboard loaded with fresh changes!");
+  </script>
   <style>
     :root {
-      --sidebar-bg: #0b0f19;
-      --sidebar-text: #94a3b8;
-      --sidebar-hover-bg: rgba(255, 255, 255, 0.05);
-      --sidebar-hover-text: #ffffff;
-      --sidebar-active-bg: rgba(194, 24, 91, 0.15);
-      --sidebar-active-text: #ffffff;
-      --sidebar-active-border: #C2185B;
-      --main-bg: #f8fafc;
+      --sidebar-bg: #FFFFFF;
+      --sidebar-text: #64748b;
+      --sidebar-hover-bg: var(--primary-light);
+      --sidebar-hover-text: var(--dark);
+      --sidebar-active-bg: var(--primary-50);
+      --sidebar-active-text: var(--primary);
+      --sidebar-active-border: var(--primary);
+      --main-bg: var(--bg-section);
       --card-bg: #ffffff;
-      --accent: #C2185B;
-      --accent-hover: #AD1457;
-      --accent-light: #fce4ec;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
+      --accent: var(--primary);
+      --accent-hover: var(--primary-hover);
+      --accent-light: var(--primary-light);
+      --text-main: var(--dark);
+      --text-muted: var(--gray);
       --border: #e2e8f0;
       --success: #10b981;
       --danger: #ef4444;
@@ -47,19 +51,19 @@
       position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
       display: flex; flex-direction: column;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      border-right: 1px solid rgba(255,255,255,0.05); overflow: hidden;
-      box-shadow: 4px 0 24px rgba(0,0,0,0.06);
+      border-right: 1px solid var(--border); overflow: hidden;
+      box-shadow: var(--shadow-sm);
     }
     .sidebar.collapsed { width: 88px; }
 
     .sidebar-brand {
       padding: 24px; display: flex; align-items: center; gap: 16px;
       height: 88px; flex-shrink: 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05); text-decoration: none;
+      border-bottom: 1px solid var(--border); text-decoration: none;
     }
-    .sidebar-brand img { width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0; box-shadow: 0 4px 12px rgba(194,24,91,0.3); }
+    .sidebar-brand img { width: 56px; height: 56px; border-radius: 12px; flex-shrink: 0; }
     .sidebar-brand span {
-      font-family: var(--font-serif); font-size: 1.35rem; color: white; font-weight: 600;
+      font-family: var(--font-serif); font-size: 1.5rem; color: #A0825B; font-weight: 800;
       white-space: nowrap; opacity: 1; transition: opacity 0.3s ease; letter-spacing: -0.5px;
     }
     .sidebar.collapsed .sidebar-brand span { opacity: 0; pointer-events: none; display: none; }
@@ -83,27 +87,27 @@
     }
     .sidebar.collapsed .sidebar-link { padding: 14px 0; justify-content: center; }
     .sidebar.collapsed .sidebar-link span { display: none; }
-    .sidebar-link:hover { color: #fff; background: var(--sidebar-hover-bg); }
-    .sidebar-link.active { color: #fff; background: var(--sidebar-active-bg); border-left-color: var(--sidebar-active-border); font-weight: 600; }
+    .sidebar-link:hover { color: var(--sidebar-hover-text); background: var(--sidebar-hover-bg); }
+    .sidebar-link.active { color: var(--sidebar-active-text); background: var(--sidebar-active-bg); border-left-color: var(--sidebar-active-border); font-weight: 600; }
     .sidebar-link i { width: 22px; text-align: center; font-size: 1.1rem; flex-shrink: 0; transition: transform 0.3s; }
     .sidebar-link:hover i { transform: scale(1.1); }
     .sidebar-link.sos-nav { color: #f87171; }
     .sidebar-link.sos-nav:hover { background: rgba(239,68,68,0.1); color: #ef4444; border-left-color: #ef4444; }
 
     .sidebar-user-box {
-      padding: 20px 24px; background: rgba(0,0,0,0.2); flex-shrink: 0;
-      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 20px 24px; background: var(--primary-50); flex-shrink: 0;
+      border-top: 1px solid var(--border);
     }
     .sidebar-user-row { display: flex; align-items: center; gap: 14px; }
     .sidebar-avatar {
       width: 44px; height: 44px;
-      background: linear-gradient(135deg, var(--accent), #e91e63); color: white;
+      background: var(--primary); color: white;
       border-radius: 12px; display: flex; align-items: center; justify-content: center;
-      font-weight: 700; font-size: 1.1rem; box-shadow: 0 4px 12px rgba(194,24,91,0.3); flex-shrink: 0;
+      font-weight: 700; font-size: 1.1rem; box-shadow: 0 4px 12px rgba(184, 155, 114, 0.3); flex-shrink: 0;
     }
     .sidebar-user-info-text { opacity: 1; transition: opacity 0.3s ease; white-space: nowrap; overflow: hidden; flex: 1; }
     .sidebar.collapsed .sidebar-user-info-text { opacity: 0; pointer-events: none; display: none; }
-    .sidebar-username { font-weight: 600; font-size: 0.95rem; color: white; }
+    .sidebar-username { font-weight: 600; font-size: 0.95rem; color: var(--dark); }
     .sidebar-useremail { font-size: 0.8rem; color: var(--sidebar-text); margin-top: 3px; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
     .logout-btn-icon {
       color: var(--sidebar-text); background: none; border: none; cursor: pointer;
@@ -151,9 +155,9 @@
       100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); }
     }
     .topbar-avatar {
-      width: 44px; height: 44px; background: linear-gradient(135deg, #0F172A, #334155);
+      width: 44px; height: 44px; background: var(--primary);
       color: white; border-radius: 12px; display: flex; align-items: center; justify-content: center;
-      font-weight: 700; font-size: 1.1rem; cursor: pointer; border: 1px solid var(--border);
+      font-weight: 700; font-size: 1.1rem; cursor: pointer; border: none; box-shadow: 0 4px 12px rgba(184, 155, 114, 0.3);
     }
 
     /* Content */
@@ -161,34 +165,34 @@
 
     /* Welcome Card */
     .welcome-card {
-      background: linear-gradient(120deg, #1e293b 0%, #0f172a 100%);
-      border-radius: 24px; padding: 48px; color: white;
+      background: linear-gradient(120deg, var(--primary) 0%, var(--primary-hover) 100%);
+      border-radius: 24px; padding: 48px; color: var(--white);
       margin-bottom: 32px; position: relative; overflow: hidden;
-      box-shadow: 0 20px 40px rgba(15,23,42,0.15);
+      box-shadow: var(--shadow-lg);
     }
     .welcome-card::before {
       content: ''; position: absolute; right: -50px; top: -100px;
       width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(194,24,91,0.3) 0%, transparent 60%);
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
       border-radius: 50%; z-index: 0;
     }
     .welcome-card::after {
       content: ''; position: absolute; right: 20%; bottom: -150px;
       width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(56,189,248,0.2) 0%, transparent 60%);
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
       border-radius: 50%; z-index: 0;
     }
     .welcome-content { position: relative; z-index: 2; max-width: 700px; }
     .welcome-badge {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(255,255,255,0.1); backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.2); padding: 6px 16px;
+      background: rgba(255,255,255,0.2); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.3); padding: 6px 16px;
       border-radius: 50px; font-size: 0.8rem; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px; color: #38bdf8;
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 24px; color: var(--white);
     }
-    .welcome-badge i { color: #34d399; font-size: 0.7rem; }
-    .welcome-content h2 { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 500; margin-bottom: 12px; line-height: 1.2; }
-    .welcome-content p { font-size: 1.1rem; color: #cbd5e1; line-height: 1.6; font-weight: 300; }
+    .welcome-badge i { color: var(--white); font-size: 0.7rem; }
+    .welcome-content h2 { font-family: var(--font-serif); font-size: 2.5rem; font-weight: 500; margin-bottom: 12px; line-height: 1.2; color: var(--white); }
+    .welcome-content p { font-size: 1.1rem; color: rgba(255,255,255,0.9); line-height: 1.6; font-weight: 300; }
     .hero-actions { display: flex; gap: 16px; margin-top: 32px; }
     .btn-hero {
       padding: 12px 24px; border-radius: 12px; font-size: 0.95rem; font-weight: 600;
@@ -202,10 +206,10 @@
     /* SOS Banner */
     .sos-banner {
       display: flex; align-items: center; gap: 24px; padding: 24px 32px;
-      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+      background: linear-gradient(135deg, var(--danger) 0%, #b91c1c 100%);
       border-radius: 20px; color: white; margin-bottom: 32px;
       cursor: pointer; transition: all 0.3s ease; text-decoration: none;
-      box-shadow: 0 10px 30px rgba(220,38,38,0.25); position: relative; overflow: hidden;
+      box-shadow: 0 10px 30px rgba(211, 47, 47, 0.2); position: relative; overflow: hidden;
     }
     .sos-banner:hover { transform: translateY(-3px) scale(1.005); box-shadow: 0 15px 35px rgba(220,38,38,0.35); }
     .sos-banner-icon {
@@ -390,13 +394,13 @@
   <!-- Sidebar -->
   <aside class="sidebar" id="sidebar">
     <a href="dashboard.html" class="sidebar-brand">
-      <img src="images/logo.svg" alt="Voice of Her" onerror="this.style.display='none'" />
+      <img src="images/new_logo.png" alt="Voice of Her" onerror="this.style.display='none'" />
       <span>Voice of Her</span>
     </a>
 
     <div class="sidebar-user-box">
       <div class="sidebar-user-row">
-        <div class="sidebar-avatar" id="sb-avatar">U</div>
+        <div class="sidebar-avatar" id="sb-avatar"><i class="fas fa-user"></i></div>
         <div class="sidebar-user-info-text">
           <div class="sidebar-username" id="sb-name">User</div>
           <div class="sidebar-useremail" id="sb-email"></div>
@@ -442,12 +446,11 @@
         </button>
         <div class="topbar-left">
           <h1>Dashboard</h1>
-          <p id="topbar-date"></p>
         </div>
       </div>
       <div class="topbar-right">
         <a href="sos.html" class="topbar-btn sos-btn" title="Emergency SOS"><i class="fas fa-shield-halved"></i></a>
-        <div class="topbar-avatar" id="tb-avatar">U</div>
+        <div class="topbar-avatar" id="tb-avatar"><i class="fas fa-user"></i></div>
       </div>
     </div>
 
@@ -540,7 +543,7 @@
                   <option value="Other">Other</option>
                 </select>
               </div>
-              <button class="btn-add-contact" id="btn-add-contact" onclick="handleAddContact()">
+              <button type="button" class="btn-add-contact" id="btn-add-contact" onclick="handleAddContact(event)">
                 <i class="fas fa-plus"></i> Add Contact
               </button>
             </div>
@@ -569,7 +572,7 @@
 
 <script>
   // Auth guard
-  if (typeof isLoggedIn === 'function' && !isLoggedIn()) {
+  if (typeof isLoggedIn === 'function' && !window.isLoggedIn()) {
     window.location.href = 'index.html';
   }
 
@@ -578,7 +581,9 @@
   if (logoutBtnSm) {
     logoutBtnSm.addEventListener('click', function(e) {
       e.preventDefault();
-      if (typeof logout === 'function') logout();
+      localStorage.clear();
+      document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+      window.location.href = 'index.html';
     });
   }
 
@@ -641,14 +646,10 @@
   function setUserInfo(name, detail) {
     const welcomeEl = document.getElementById('welcome-text');
     if (welcomeEl) welcomeEl.textContent = greeting + ', ' + name + '!';
-    const sbAvatar = document.getElementById('sb-avatar');
-    if (sbAvatar) sbAvatar.textContent = name.charAt(0).toUpperCase();
     const sbName = document.getElementById('sb-name');
     if (sbName) sbName.textContent = name;
     const sbEmail = document.getElementById('sb-email');
     if (sbEmail) sbEmail.textContent = detail;
-    const tbAvatar = document.getElementById('tb-avatar');
-    if (tbAvatar) tbAvatar.textContent = name.charAt(0).toUpperCase();
   }
 
   // =========== Emergency Contacts ===========
@@ -657,7 +658,7 @@
   async function loadContacts() {
     try {
       if (typeof getEmergencyContacts === 'function') {
-        const contacts = await getEmergencyContacts();
+        const contacts = await window.getEmergencyContacts();
         currentContacts = contacts || [];
         renderContacts(currentContacts);
       }
@@ -716,7 +717,9 @@
     }, 4000);
   }
 
-  async function handleAddContact() {
+  async function handleAddContact(e) {
+    if (e) e.preventDefault();
+    alert('Button clicked! Starting process...');
     const nameEl = document.getElementById('contact-name');
     const phoneEl = document.getElementById('contact-phone');
     const relEl = document.getElementById('contact-relationship');
@@ -747,6 +750,7 @@
         showToast('Contact feature not available.', 'error');
       }
     } catch (e) {
+      console.error('HandleAddContact Error:', e);
       showToast(e.message || 'Failed to add contact. Try again.', 'error');
     } finally {
       btn.disabled = false;
@@ -769,7 +773,12 @@
 
   // Allow pressing Enter in inputs to submit
   document.getElementById('contact-name').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('contact-phone').focus(); });
-  document.getElementById('contact-phone').addEventListener('keydown', e => { if (e.key === 'Enter') handleAddContact(); });
+  document.getElementById('contact-phone').addEventListener('keydown', e => { if (e.key === 'Enter') handleAddContact(e); });
+
+  const addBtn = document.getElementById('btn-add-contact');
+  if (addBtn) {
+    addBtn.addEventListener('click', handleAddContact);
+  }
 
   // Init
   loadUserInfo();

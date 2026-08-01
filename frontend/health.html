@@ -4,16 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Health & Wellness | Voice of Her</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=3" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <script type="module" src="fire.js"></script>
+  <script type="module" src="fire.js?v=3"></script>
 </head>
 <body>
 
 <header id="main-header">
   <div class="header-inner">
     <a href="dashboard.html" class="logo">
-      <img src="images/logo.svg" alt="Voice of Her" />
+      <img src="images/new_logo.png" alt="Voice of Her" />
       <span>Voice of Her</span>
     </a>
     <nav>
@@ -72,7 +72,7 @@
   <div class="footer-grid">
     <div class="footer-brand">
       <div class="footer-brand-logo">
-        <img src="images/logo.svg" alt="Voice of Her" />
+        <img src="images/new_logo.png" alt="Voice of Her" />
         <span>Voice of Her</span>
       </div>
       <p>Empowering women through safety, education, health, and economic development.</p>
@@ -93,9 +93,14 @@
 </footer>
 
 <script type="module">
-  import { isLoggedIn, logout } from './fire.js';
-  if (!isLoggedIn()) window.location.href = 'index.html';
-  document.getElementById('logout-btn').addEventListener('click', function(e) { e.preventDefault(); logout(); });
+
+  if (!window.isLoggedIn()) window.location.href = 'index.html';
+  document.getElementById('logout-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    localStorage.clear();
+    document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+    window.location.href = 'index.html';
+  });
   window.addEventListener('scroll', function() {
     document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50);
   });

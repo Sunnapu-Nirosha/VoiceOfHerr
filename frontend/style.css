@@ -1,21 +1,21 @@
 /* ============================================
    VOICE OF HER - Professional Design System
    ============================================ */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 
 :root {
-  --primary: #C2185B;
-  --primary-hover: #AD1457;
-  --primary-light: #FCE4EC;
-  --primary-50: rgba(194, 24, 91, 0.08);
-  --dark: #212121;
-  --dark-2: #424242;
-  --gray: #757575;
-  --gray-light: #9E9E9E;
-  --border: #E0E0E0;
-  --bg: #FFFFFF;
-  --bg-alt: #FAFAFA;
-  --bg-section: #F5F5F5;
+  --primary: #B89B72;
+  --primary-hover: #A0825B;
+  --primary-light: #F4EFEA;
+  --primary-50: rgba(184, 155, 114, 0.1);
+  --dark: #2C2A28;
+  --dark-2: #4A4540;
+  --gray: #79715A;
+  --gray-light: #B0A99F;
+  --border: #E6E2DB;
+  --bg: #F9F6F0;
+  --bg-alt: #FFFFFF;
+  --bg-section: #F2EBE3;
   --white: #FFFFFF;
   --success: #2E7D32;
   --danger: #D32F2F;
@@ -23,12 +23,12 @@
   --radius: 12px;
   --radius-sm: 8px;
   --radius-lg: 16px;
-  --shadow: 0 1px 3px rgba(0,0,0,0.08);
-  --shadow-md: 0 4px 16px rgba(0,0,0,0.1);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
-  --transition: 0.25s ease;
-  --font: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-serif: 'DM Serif Display', Georgia, serif;
+  --shadow: 0 1px 3px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.08);
+  --transition: 0.3s ease;
+  --font: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
 }
 
 /* Reset */
@@ -75,17 +75,22 @@ header.scrolled {
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 16px;
+  text-decoration: none;
 }
 .logo img {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  object-fit: cover;
 }
 .logo span {
   font-family: var(--font-serif);
-  font-size: 1.4rem;
-  color: var(--dark);
+  font-size: 1.5rem;
+  color: #A0825B;
+  font-weight: 800;
+  letter-spacing: -0.5px;
 }
 nav { display: flex; align-items: center; gap: 6px; }
 nav a {
@@ -132,44 +137,45 @@ nav a:hover {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(33,33,33,0.75) 0%, rgba(33,33,33,0.5) 100%);
+  background: linear-gradient(to right, rgba(249, 246, 240, 0.95) 0%, rgba(249, 246, 240, 0.6) 100%);
 }
 .hero-content {
   position: relative;
   z-index: 2;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 80px 32px;
+  padding: 100px 32px;
   width: 100%;
 }
 .hero-label {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(8px);
   padding: 10px 20px;
   border-radius: 50px;
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--white);
-  letter-spacing: 0.5px;
+  color: var(--primary);
+  letter-spacing: 1px;
   margin-bottom: 28px;
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid rgba(184, 155, 114, 0.2);
+  text-transform: uppercase;
 }
 .hero-label i { font-size: 0.7rem; }
 .hero h1 {
   font-family: var(--font-serif);
-  font-size: 4rem;
-  font-weight: 400;
-  color: var(--white);
-  line-height: 1.15;
+  font-size: 4.5rem;
+  font-weight: 500;
+  color: var(--dark);
+  line-height: 1.1;
   margin-bottom: 24px;
   max-width: 650px;
 }
 .hero p {
   font-size: 1.25rem;
-  color: rgba(255,255,255,0.85);
+  color: var(--dark-2);
   max-width: 520px;
   line-height: 1.7;
   margin-bottom: 40px;
@@ -200,12 +206,12 @@ nav a:hover {
 }
 .btn-outline {
   background: transparent;
-  color: var(--white);
-  border: 1.5px solid rgba(255,255,255,0.4);
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
 }
 .btn-outline:hover {
-  background: rgba(255,255,255,0.1);
-  border-color: var(--white);
+  background: var(--primary-50);
+  border-color: var(--primary-hover);
 }
 .btn-primary {
   background: var(--primary);
@@ -214,7 +220,7 @@ nav a:hover {
 .btn-primary:hover {
   background: var(--primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(194,24,91,0.3);
+  box-shadow: 0 4px 12px rgba(184, 155, 114, 0.3);
 }
 .btn-sos {
   background: var(--danger);
@@ -269,14 +275,14 @@ nav a:hover {
 }
 .service-card {
   background: var(--white);
-  border: 1px solid var(--border);
+  border: none;
   border-radius: var(--radius-lg);
   overflow: hidden;
+  box-shadow: var(--shadow);
   transition: var(--transition);
 }
 .service-card:hover {
-  border-color: transparent;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
   transform: translateY(-4px);
 }
 .service-card-img {
@@ -733,19 +739,19 @@ footer {
    PAGE HEADER (sub-pages)
    ============================================ */
 .page-hero {
-  background: var(--dark);
+  background: var(--primary-light);
   padding: 120px 32px 60px;
   text-align: center;
 }
 .page-hero h1 {
   font-family: var(--font-serif);
   font-size: 2.8rem;
-  color: var(--white);
+  color: var(--dark);
   margin-bottom: 12px;
 }
 .page-hero p {
   font-size: 1.05rem;
-  color: rgba(255,255,255,0.6);
+  color: var(--dark-2);
   max-width: 480px;
   margin: 0 auto;
 }
@@ -804,19 +810,19 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
+  background: var(--bg-section);
   padding: 100px 32px 60px;
 }
 .sos-center { text-align: center; max-width: 500px; width: 100%; }
 .sos-center h1 {
   font-family: var(--font-serif);
   font-size: 2.8rem;
-  color: var(--white);
+  color: var(--dark);
   margin-bottom: 12px;
 }
 .sos-center > p {
   font-size: 1rem;
-  color: rgba(255,255,255,0.6);
+  color: var(--dark-2);
   margin-bottom: 40px;
 }
 .sos-btn {
@@ -855,7 +861,7 @@ footer {
   50% { transform: scale(1.08); opacity: 1; }
 }
 .sos-status {
-  color: rgba(255,255,255,0.5);
+  color: var(--gray);
   font-size: 0.88rem;
   margin-top: 24px;
 }
@@ -873,7 +879,7 @@ footer {
   text-align: left;
 }
 .sos-contacts h3 {
-  color: var(--white);
+  color: var(--dark);
   font-size: 1rem;
   margin-bottom: 16px;
   text-align: center;
@@ -883,10 +889,12 @@ footer {
   align-items: center;
   justify-content: space-between;
   padding: 14px 16px;
-  background: rgba(255,255,255,0.06);
+  background: var(--white);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
   border-radius: var(--radius-sm);
   margin-bottom: 8px;
-  color: var(--white);
+  color: var(--dark);
 }
 .sos-contact-item span { font-weight: 600; font-size: 0.9rem; }
 .sos-add-btn {
@@ -1059,4 +1067,9 @@ footer {
   .cta-box { padding: 40px 24px; }
   .section-title { font-size: 2.2rem; }
   .about-text h2 { font-size: 2rem; }
+}
+
+/* Make logo more visible on white backgrounds */
+img[src*="logo.png"] {
+  filter: brightness(0.4) sepia(1) hue-rotate(330deg) drop-shadow(0px 0px 1px rgba(0,0,0,0.5)) drop-shadow(0px 1px 2px rgba(184, 155, 114, 0.8));
 }

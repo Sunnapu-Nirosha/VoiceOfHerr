@@ -85,6 +85,59 @@ router.post('/create', authenticateToken, createAlertValidation, async (req, res
 
     const notificationResults = [];
 
+    // Notify Emergency Contacts first
+    if (user.emergencyContacts && user.emergencyContacts.length > 0) {
+      console.log('Found', user.emergencyContacts.length, 'emergency contacts to notify');
+      for (const contact of user.emergencyContacts) {
+        const formattedPhone = formatPhone(contact.phone);
+        let callStatus = 'skipped';
+        let smsStatus = 'skipped';
+
+        console.log('Notifying Emergency Contact:', contact.name, formattedPhone);
+
+        if (twilioClient && twilioPhone && formattedPhone) {
+          // TRY PHONE CALL via Twilio
+          try {
+            const call = await twilioClient.calls.create({
+              url: 'http://twimlets.com/voice?Message=' + encodeURIComponent(callMessage),
+              to: formattedPhone,
+              from: twilioPhone
+            });
+            callStatus = 'sent';
+            console.log('  CONTACT CALL sent ->', call.sid);
+          } catch (callErr) {
+            callStatus = 'failed';
+            console.log('  CONTACT CALL failed:', callErr.message);
+          }
+
+          // TRY SMS via Twilio
+          try {
+            const sms = await twilioClient.messages.create({
+              body: smsMessage,
+              from: twilioPhone,
+              to: formattedPhone
+            });
+            smsStatus = 'sent';
+            console.log('  CONTACT SMS sent ->', sms.sid);
+          } catch (smsErr) {
+            smsStatus = 'failed';
+            console.log('  CONTACT SMS failed:', smsErr.message);
+          }
+        } else {
+          console.log('  CONTACT Twilio skipped (Not configured or invalid phone)');
+        }
+
+        notificationResults.push({
+          name: contact.name + ' (Emergency Contact)',
+          phone: formattedPhone,
+          email: '',
+          emailStatus: 'skipped',
+          callStatus: callStatus,
+          smsStatus: smsStatus
+        });
+      }
+    }
+
     for (const userDoc of allUsers) {
       const formattedPhone = formatPhone(userDoc.phone);
       let emailStatus = 'skipped';
